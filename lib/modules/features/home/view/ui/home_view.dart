@@ -3,31 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:java_code/config/themes/colours.dart';
-import 'package:java_code/constant/core/assets_const.dart';
+import '/modules/features/home/view/components/image_promo.dart';
+import '/modules/features/home/view/components/item_menu.dart';
+import '/config/themes/colours.dart';
+import '/constant/core/assets_const.dart';
+import '/modules/features/home/controllers/home_controller.dart';
+import '/modules/features/home/view/components/judul_menu.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({Key? key}) : super(key: key);
 
-  // int _current = 0;
-  final CarouselController _controller = CarouselController();
-
-  List<Widget> imageSliders = [
-    ImagePromo(imageUrl: AssetConts.drawDiskonKompetensi),
-    ImagePromo(imageUrl: AssetConts.drawDiskonMengaji),
-    ImagePromo(imageUrl: AssetConts.drawDiskonMengisiReview),
-    ImagePromo(imageUrl: AssetConts.drawDiskonTelatTigaKali),
-    ImagePromo(imageUrl: AssetConts.drawDiskonTidakTelat),
-    ImagePromo(imageUrl: AssetConts.drawVoucher100),
-    ImagePromo(imageUrl: AssetConts.drawVoucher200Bulan),
-    ImagePromo(imageUrl: AssetConts.drawVoucher200Karyawan),
-  ];
   @override
   Widget build(BuildContext context) {
+    final CarouselController _controller = CarouselController();
+
+    List<Widget> imageSliders = [
+      ImagePromo(imageUrl: AssetConts.drawDiskonKompetensi),
+      ImagePromo(imageUrl: AssetConts.drawDiskonMengaji),
+      ImagePromo(imageUrl: AssetConts.drawDiskonMengisiReview),
+      ImagePromo(imageUrl: AssetConts.drawDiskonTelatTigaKali),
+      ImagePromo(imageUrl: AssetConts.drawDiskonTidakTelat),
+      ImagePromo(imageUrl: AssetConts.drawVoucher100),
+      ImagePromo(imageUrl: AssetConts.drawVoucher200Bulan),
+      ImagePromo(imageUrl: AssetConts.drawVoucher200Karyawan),
+    ];
+
+    Get.put(HomeController());
+
     return Scaffold(
       backgroundColor: Colours.bgColors,
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: [
             /// APPBAR PENCARIAN
             Material(
@@ -114,12 +120,12 @@ class HomeView extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             Container(
               height: 35,
               width: ScreenUtil().screenWidth,
-              margin: EdgeInsets.only(left: 25),
+              margin: const EdgeInsets.only(left: 25),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -127,7 +133,7 @@ class HomeView extends StatelessWidget {
                     height: 35,
                     padding:
                         EdgeInsets.symmetric(vertical: 5.sp, horizontal: 14.sp),
-                    margin: EdgeInsets.only(right: 13),
+                    margin: const EdgeInsets.only(right: 13),
                     decoration: BoxDecoration(
                       color: Colours.darkGrey,
                       borderRadius: BorderRadius.circular(30),
@@ -153,7 +159,7 @@ class HomeView extends StatelessWidget {
                     height: 35,
                     padding:
                         EdgeInsets.symmetric(vertical: 5.sp, horizontal: 14.sp),
-                    margin: EdgeInsets.only(right: 13),
+                    margin: const EdgeInsets.only(right: 13),
                     decoration: BoxDecoration(
                       color: Colours.blue,
                       borderRadius: BorderRadius.circular(30),
@@ -179,7 +185,33 @@ class HomeView extends StatelessWidget {
                     height: 35,
                     padding:
                         EdgeInsets.symmetric(vertical: 5.sp, horizontal: 14.sp),
-                    margin: EdgeInsets.only(right: 13),
+                    margin: const EdgeInsets.only(right: 13),
+                    decoration: BoxDecoration(
+                      color: Colours.blue,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Row(
+                      children: [
+                        Image.asset(AssetConts.iconMakanan),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        Text(
+                          "Snack",
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
+                            color: Colours.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 35,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 5.sp, horizontal: 14.sp),
+                    margin: const EdgeInsets.only(right: 13),
                     decoration: BoxDecoration(
                       color: Colours.blue,
                       borderRadius: BorderRadius.circular(30),
@@ -205,41 +237,76 @@ class HomeView extends StatelessWidget {
               ),
             ),
 
+            /// LIST MENU
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 25.sp, vertical: 11.sp),
+              child: ListView(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                children: [
+                  /// JUDUL ITEM MENU
+                  JudulMenu(
+                      iconMenu: AssetConts.iconMakanan, judulMenu: "Makanan"),
+
+                  /// ITEM MENU
+                  const ItemMenu(),
+                  const ItemMenu(),
+                  const ItemMenu(),
+                  const ItemMenu(),
+                  const ItemMenu(),
+
+                  /// JUDUL ITEM MENU
+                  JudulMenu(
+                      iconMenu: AssetConts.iconMinuman, judulMenu: "Minuman"),
+
+                  /// ITEM MENU
+                  const ItemMenu(),
+                  const ItemMenu(),
+                  const ItemMenu(),
+                  const ItemMenu(),
+                  const ItemMenu(),
+                ],
+              ),
+            )
+
             /// BOTTOM NAVIGATION
             // BottomNavigationBar(items: [BottomNavigationBarItem(icon: icon)])
           ],
         ),
       ),
-    );
-  }
-}
+      bottomNavigationBar: GetBuilder<HomeController>(
+        builder: (c) {
+          return ClipRRect(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.sp),
+                topRight: Radius.circular(30.sp)),
+            child: BottomNavigationBar(
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Image.asset(AssetConts.iconHome),
+                  label: "Beranda",
+                ),
+                BottomNavigationBarItem(
+                  icon: Image.asset(AssetConts.iconPesanan),
+                  label: "Pesanan",
+                ),
+                BottomNavigationBarItem(
+                  icon: Image.asset(AssetConts.iconProfile),
+                  label: "Profil",
+                ),
+              ],
+              currentIndex: c.selectedNavbar,
+              selectedItemColor: Colours.white,
+              unselectedItemColor: Colors.grey,
+              showUnselectedLabels: true,
+              backgroundColor: Colours.darkBlack,
 
-class ImagePromo extends StatelessWidget {
-  ImagePromo({
-    Key? key,
-    required this.imageUrl,
-  }) : super(key: key);
-
-  String imageUrl;
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        print("dijalankan");
-      },
-      child: Container(
-        height: 161.sp,
-        width: 323.sp,
-        margin: const EdgeInsets.only(left: 25),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.sp),
-          image: DecorationImage(
-            image: AssetImage(imageUrl),
-            fit: BoxFit.cover,
-          ),
-        ),
+              // onTap: c.changeSelectedNavBar(
+              //     c.selectedNavbar),
+            ),
+          );
+        },
       ),
     );
-    // return Image.asset(imageUrl);
   }
 }

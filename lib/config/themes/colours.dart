@@ -7,6 +7,7 @@ class Colours {
   static const Color grey = Color(0xff8F8F8F);
   static const Color blue = Color(0xff00717F);
   static const Color white = Color(0xffFFFFFF);
+  static const Color whiteItem = Color(0xffF6F6F6);
   static const Color red = Color(0xffD81D1D);
   static const Color green = Color(0xFF00717F);
   static const Color green2 = Color(0xFF009AAD);

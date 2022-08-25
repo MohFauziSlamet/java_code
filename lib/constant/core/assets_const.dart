@@ -19,6 +19,9 @@ class AssetConts {
       'assets/images/draw_voucher_200_bulan.png';
   static const String drawVoucher200Karyawan =
       'assets/images/draw_voucher_200_karyawan.png';
+  static const String drawChickenKatsu = 'assets/images/draw_chickenKatsu.png';
+  static const String drawDetailChickenKatsu =
+      'assets/images/draw_detailMenuKatsu.png';
 
   /// bg
   static const String backgroundLoadingLokasi =
@@ -34,4 +37,12 @@ class AssetConts {
   static const String iconSemuaMenu = 'assets/images/ic_semuamenu.png';
   static const String iconMakanan = 'assets/images/ic_makanan.png';
   static const String iconMinuman = 'assets/images/ic_minuman.png';
+  static const String iconKurang = 'assets/images/ic_kurang.png';
+  static const String iconTambah = 'assets/images/ic_tambah.png';
+  static const String iconTambahNote = 'assets/images/ic_tambahnote.png';
+  static const String iconHome = 'assets/images/ic_home.png';
+  static const String iconPesanan = 'assets/images/ic_pesanan.png';
+  static const String iconProfile = 'assets/images/ic_profile.png';
+  static const String iconSyaratKetentuan =
+      'assets/images/ic_syaratketentuan.png';
 }
