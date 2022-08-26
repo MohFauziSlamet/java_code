@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:java_code/config/routes/app_routes.dart';
 import '/modules/features/home/view/components/image_promo.dart';
 import '/modules/features/home/view/components/item_menu.dart';
 import '/config/themes/colours.dart';
@@ -306,6 +307,44 @@ class HomeView extends StatelessWidget {
             ),
           );
         },
+      ),
+      floatingActionButton: Stack(
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              Get.toNamed(AppRoutes.pesanan);
+            },
+            backgroundColor: Colours.green2,
+            child: Image.asset(
+              AssetConts.iconKeranjang,
+              color: Colours.white,
+              width: 25,
+            ),
+          ),
+          Positioned(
+            left: 41.sp,
+            bottom: 37.sp,
+            child: Container(
+              height: 22.w,
+              width: 22.w,
+              decoration: BoxDecoration(
+                color: Colours.white,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colours.green2),
+              ),
+              child: Center(
+                child: Text(
+                  "1",
+                  style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    color: Colours.green2,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

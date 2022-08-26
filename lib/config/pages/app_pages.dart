@@ -6,6 +6,7 @@ import 'package:java_code/modules/features/detail_promo/view/ui/detail_promo_vie
 import 'package:java_code/modules/features/home/view/ui/home_view.dart';
 import 'package:java_code/modules/features/loading_lokasi/view/ui/loading_lokasi_view.dart';
 import 'package:java_code/modules/features/login/view/ui/login_view.dart';
+import 'package:java_code/modules/features/pesanan/view/ui/pesanan_view.dart';
 
 class AppPages {
   AppPages._();
@@ -31,6 +32,10 @@ class AppPages {
       GetPage(
         name: AppRoutes.detailMenu,
         page: () => DetailMenuView(),
+      ),
+      GetPage(
+        name: AppRoutes.pesanan,
+        page: () => PesananView(),
       ),
     ];
   }

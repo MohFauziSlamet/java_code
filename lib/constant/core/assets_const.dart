@@ -45,4 +45,10 @@ class AssetConts {
   static const String iconProfile = 'assets/images/ic_profile.png';
   static const String iconSyaratKetentuan =
       'assets/images/ic_syaratketentuan.png';
+  static const String iconHarga = 'assets/images/ic_harga.png';
+  static const String iconTopping = 'assets/images/ic_topping.png';
+  static const String iconLevel = 'assets/images/ic_level.png';
+  static const String iconCatatan = 'assets/images/ic_catatan.png';
+  static const String iconCeklis = 'assets/images/ic_ceklis.png';
+  static const String iconKeranjang = 'assets/images/ic_keranjang.png';
 }
