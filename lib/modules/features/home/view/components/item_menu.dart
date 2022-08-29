@@ -85,67 +85,15 @@ class ItemMenu extends StatelessWidget {
                       /// ICON TAMBAH  NOTE
                       Row(
                         children: [
-                          InkWell(
-                            onTap: () {
-                              Get.defaultDialog(
-                                title: "Hallo",
-                                actions: [
-                                  OutlinedButton(
-                                    onPressed: () {
-                                      Get.back();
-                                    },
-                                    child: const Text("Batal"),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Get.back();
-                                    },
-                                    child: const Text("Tambahkan"),
-                                  ),
-                                ],
-                                content: Column(
-                                  children: [
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      child: Center(
-                                        child: Text(
-                                          "Perhatian, Untuk menghapus catatan, kosongkan form dan klik tambahkan. Terimakasih",
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      child: const TextField(
-                                        autocorrect: false,
-                                        maxLines: 1,
-                                        textInputAction: TextInputAction.done,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 2,
-                                              color: Colors.lightBlue,
-                                            ),
-                                          ),
-                                          hintText: "Tulis Catatan Kamu",
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                          Container(
+                            height: 11.h,
+                            width: 13.w,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                  AssetConts.iconTambahNote,
                                 ),
-                              );
-                            },
-                            child: Container(
-                              height: 11.h,
-                              width: 13.w,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    AssetConts.iconTambahNote,
-                                  ),
-                                  fit: BoxFit.contain,
-                                ),
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),

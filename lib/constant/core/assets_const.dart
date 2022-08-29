@@ -22,6 +22,8 @@ class AssetConts {
   static const String drawChickenKatsu = 'assets/images/draw_chickenKatsu.png';
   static const String drawDetailChickenKatsu =
       'assets/images/draw_detailMenuKatsu.png';
+  static const String drawVoucher = 'assets/images/draw_voucher.png';
+  static const String drawEmptyProfile = 'assets/images/draw_emptyprofile.png';
 
   /// bg
   static const String backgroundLoadingLokasi =
@@ -51,4 +53,15 @@ class AssetConts {
   static const String iconCatatan = 'assets/images/ic_catatan.png';
   static const String iconCeklis = 'assets/images/ic_ceklis.png';
   static const String iconKeranjang = 'assets/images/ic_keranjang.png';
+  static const String iconVoucher = 'assets/images/ic_voucher.png';
+  static const String iconPembayaran = 'assets/images/ic_pembayaran.png';
+  static const String iconDiskon = 'assets/images/ic_diskon.png';
+  static const String iconFinger = 'assets/images/ic_fingerprint.png';
+  static const String iconEmpty = 'assets/images/ic_empty.png';
+  static const String iconTime = 'assets/images/ic_time.png';
+  static const String iconBatal = 'assets/images/ic_batal.png';
+  static const String iconKalender = 'assets/images/ic_kalender.png';
+  static const String iconDropdown = 'assets/images/ic_dropdown.png';
+  static const String iconKTP = 'assets/images/ic_ktp.png';
+  static const String iconPenilaian = 'assets/images/ic_penilaian.png';
 }

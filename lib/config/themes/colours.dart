@@ -12,6 +12,8 @@ class Colours {
   static const Color green = Color(0xFF00717F);
   static const Color green2 = Color(0xFF009AAD);
   static const Color textGrey = Color(0xFFAAAAAA);
+  static const Color textYellow = Color(0xFFFFAC01);
+  static const Color textGreen = Color(0xFF009C48);
 
   static const Color bgColors = Color(0xffE5E5E5);
 

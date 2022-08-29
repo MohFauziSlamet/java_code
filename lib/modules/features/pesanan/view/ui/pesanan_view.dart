@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:java_code/config/routes/app_routes.dart';
 import 'package:java_code/config/themes/colours.dart';
 import 'package:java_code/constant/core/assets_const.dart';
 import 'package:java_code/modules/features/detail_menu/view/ui/detail_menu_view.dart';
@@ -122,6 +123,8 @@ class PesananView extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: 25.h),
+
+                  /// TOTAL PESANAN DAN HARGA
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 23.sp),
                     child: Row(
@@ -161,6 +164,8 @@ class PesananView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 14.h),
+
+                  /// GARIS PEMBATAS
                   Container(
                     width: 381.w,
                     height: 1.h,
@@ -169,6 +174,8 @@ class PesananView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 12.h),
+
+                  /// DISKON 20%
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 23.h),
                     child: Row(
@@ -178,10 +185,10 @@ class PesananView extends StatelessWidget {
                         Row(
                           children: [
                             SizedBox(
-                              height: 20.w,
+                              height: 21.h,
                               width: 20.w,
                               child: Image.asset(
-                                AssetConts.iconKeranjang,
+                                AssetConts.iconDiskon,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -227,6 +234,8 @@ class PesananView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 12.h),
+
+                  /// GARIS PEMBATAS
                   Container(
                     width: 381.w,
                     height: 1.h,
@@ -235,6 +244,8 @@ class PesananView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 12.h),
+
+                  /// VOUCHER
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 23.sp),
                     child: Row(
@@ -244,51 +255,65 @@ class PesananView extends StatelessWidget {
                         Row(
                           children: [
                             SizedBox(
-                              height: 20.w,
-                              width: 20.w,
+                              height: 17.33.w,
+                              width: 22.29.w,
                               child: Image.asset(
-                                AssetConts.iconKeranjang,
+                                AssetConts.iconVoucher,
                                 fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(width: 10.w),
                             Text(
-                              "Diskon 20%",
+                              "Voucher",
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,
                               style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
-                                fontSize: 16.sp,
+                                fontSize: 18.sp,
                                 color: Colours.darkGrey,
                               ),
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 182.w,
-                              child: Text(
-                                "nama",
-                                textAlign: TextAlign.end,
-                                maxLines: 1,
-                                style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 18,
-                                  color: Colours.darkGrey,
+                        Material(
+                          child: InkWell(
+                            splashColor: Colors.grey,
+                            onTap: () {
+                              Get.toNamed(AppRoutes.pilihVoucherView);
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 182.w,
+                                  child: Text(
+                                    "Pilih voucher",
+                                    textAlign: TextAlign.end,
+                                    maxLines: 1,
+                                    style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp,
+                                      color: Colours.darkGrey,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(
+                                  width: 13.38,
+                                ),
+                                const Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Color(0xffAFAFAF),
+                                  size: 14,
+                                )
+                              ],
                             ),
-                            const SizedBox(
-                              width: 13.38,
-                            ),
-                            const Icon(Icons.arrow_forward_ios)
-                          ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                   SizedBox(height: 12.h),
+
+                  /// GARIS BATAS
                   Container(
                     width: 381.w,
                     height: 1.h,
@@ -297,8 +322,10 @@ class PesananView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 12.h),
+
+                  /// PEMBAYARAN
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 23),
+                    padding: EdgeInsets.symmetric(horizontal: 23.sp),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -306,21 +333,21 @@ class PesananView extends StatelessWidget {
                         Row(
                           children: [
                             SizedBox(
-                              height: 20,
-                              width: 20,
+                              height: 24.w,
+                              width: 24.w,
                               child: Image.asset(
-                                AssetConts.iconKeranjang,
-                                fit: BoxFit.cover,
+                                AssetConts.iconPembayaran,
+                                fit: BoxFit.contain,
                               ),
                             ),
                             SizedBox(width: 10.w),
                             Text(
-                              "Diskon 20%",
+                              "Pembayaran",
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,
                               style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
-                                fontSize: 16.sp,
+                                fontSize: 18.sp,
                                 color: Colours.darkGrey,
                               ),
                             ),
@@ -331,20 +358,16 @@ class PesananView extends StatelessWidget {
                             SizedBox(
                               width: 182.w,
                               child: Text(
-                                "nama",
+                                "Paylater",
                                 textAlign: TextAlign.end,
                                 maxLines: 1,
                                 style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 18,
+                                  fontSize: 14.sp,
                                   color: Colours.darkGrey,
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              width: 13.38,
-                            ),
-                            const Icon(Icons.arrow_forward_ios)
                           ],
                         ),
                       ],
@@ -429,12 +452,172 @@ class PesananView extends StatelessWidget {
                             width: 169.w,
                             margin: const EdgeInsets.only(right: 10, left: 20),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                // Get.dialog(
+                                //   SizedBox(
+                                //     child: Container(
+                                //       width: 338.w,
+                                //       height: 342.h,
+                                //       child: Column(
+                                //         children: const [
+                                //           Text("Verifikasi Pesanan"),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ),
+                                //   useSafeArea: true,
+                                // );
+
+                                Get.defaultDialog(
+                                  title: 'Verifikasi Pesanan',
+                                  titleStyle: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 22.sp,
+                                    color: Colours.darkGrey,
+                                  ),
+                                  titlePadding: EdgeInsets.only(top: 24.sp),
+                                  content: Container(
+                                    width: 338.w,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Finger Print",
+                                          style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 16.sp,
+                                            color: Color(0xff969696),
+                                          ),
+                                        ),
+                                        SizedBox(height: 31.h),
+                                        Container(
+                                          height: 142.w,
+                                          width: 142.w,
+                                          child: Center(
+                                            child: Image.asset(
+                                              AssetConts.iconFinger,
+                                            ),
+                                          ),
+                                        ),
+                                        // SPACE JARAK
+                                        SizedBox(height: 27.h),
+                                        // ATAU
+                                        Row(
+                                          children: [
+                                            const Spacer(flex: 3),
+                                            Container(
+                                                height: 1,
+                                                width: 68.w,
+                                                color: Colors.grey[500]),
+                                            const Spacer(flex: 1),
+                                            Text(
+                                              "atau",
+                                              style: GoogleFonts.montserrat(
+                                                color: Colors.grey[500],
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                            const Spacer(flex: 1),
+                                            Container(
+                                                height: 1,
+                                                width: 68.w,
+                                                color: Colors.grey[500]),
+                                            const Spacer(flex: 3),
+                                          ],
+                                        ),
+                                        // SPACE JARAK
+
+                                        InkWell(
+                                          onTap: () {
+                                            Get.back(); // MENUTUP DIALOG PERTAMA
+                                            Get.defaultDialog(
+                                              title: 'Verifikasi Pesanan',
+                                              titleStyle:
+                                                  GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 22.sp,
+                                                color: Colours.darkGrey,
+                                              ),
+                                              titlePadding:
+                                                  EdgeInsets.only(top: 24.sp),
+                                              content: Container(
+                                                width: 338.w,
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      "Masukan Kode PIN",
+                                                      style: GoogleFonts
+                                                          .montserrat(
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 16.sp,
+                                                        color:
+                                                            Color(0xff969696),
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 24.h),
+                                                    // INPUT PIN
+                                                    Form(
+                                                      child: Row(
+                                                        children: [
+                                                          SizedBox(
+                                                            height: 35.h,
+                                                            width: 34.w,
+                                                            child: TextField(
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                enabledBorder:
+                                                                    OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          color:
+                                                                              Colours.grey),
+                                                                ),
+                                                                focusedBorder:
+                                                                    OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          color:
+                                                                              Colours.green2),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Text(
+                                            "Verifikasi Menggunakan PIN",
+                                            style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16.sp,
+                                              color: Colours.green2,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
                               style: ElevatedButton.styleFrom(
-                                  primary: Colours.green2,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  )),
+                                primary: Colours.green2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                              ),
                               child: Text(
                                 "Pesan Sekarang",
                                 style: GoogleFonts.montserrat(
