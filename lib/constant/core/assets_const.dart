@@ -64,4 +64,6 @@ class AssetConts {
   static const String iconDropdown = 'assets/images/ic_dropdown.png';
   static const String iconKTP = 'assets/images/ic_ktp.png';
   static const String iconPenilaian = 'assets/images/ic_penilaian.png';
+  static const String iconIndFlag = 'assets/images/ic_indFlag.png';
+  static const String iconEngFlag = 'assets/images/ic_engFlag.png';
 }

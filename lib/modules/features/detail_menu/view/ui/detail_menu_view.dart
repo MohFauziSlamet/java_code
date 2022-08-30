@@ -647,7 +647,7 @@ class DetailMenuView extends StatelessWidget {
                                             SizedBox(height: 17.sp),
                                             Row(
                                               children: [
-                                                Container(
+                                                SizedBox(
                                                   width: 349.w,
                                                   child: const TextField(
                                                     autocorrect: false,

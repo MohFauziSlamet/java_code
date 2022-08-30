@@ -12,7 +12,7 @@ import '/modules/features/home/controllers/home_controller.dart';
 import '/modules/features/home/view/components/judul_menu.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({Key? key}) : super(key: key);
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,7 @@ class HomeView extends StatelessWidget {
             SizedBox(height: 21.h),
 
             /// LOGO PROMO
-            Container(
+            SizedBox(
               height: 161.sp,
               width: ScreenUtil().screenWidth,
               child: ListView(
@@ -123,6 +123,7 @@ class HomeView extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
+            /// TAB MENU
             Container(
               height: 35,
               width: ScreenUtil().screenWidth,
@@ -269,44 +270,8 @@ class HomeView extends StatelessWidget {
                 ],
               ),
             )
-
-            /// BOTTOM NAVIGATION
-            // BottomNavigationBar(items: [BottomNavigationBarItem(icon: icon)])
           ],
         ),
-      ),
-      bottomNavigationBar: GetBuilder<HomeController>(
-        builder: (c) {
-          return ClipRRect(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.sp),
-                topRight: Radius.circular(30.sp)),
-            child: BottomNavigationBar(
-              items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Image.asset(AssetConts.iconHome),
-                  label: "Beranda",
-                ),
-                BottomNavigationBarItem(
-                  icon: Image.asset(AssetConts.iconPesanan),
-                  label: "Pesanan",
-                ),
-                BottomNavigationBarItem(
-                  icon: Image.asset(AssetConts.iconProfile),
-                  label: "Profil",
-                ),
-              ],
-              currentIndex: c.selectedNavbar,
-              selectedItemColor: Colours.white,
-              unselectedItemColor: Colors.grey,
-              showUnselectedLabels: true,
-              backgroundColor: Colours.darkBlack,
-
-              // onTap: c.changeSelectedNavBar(
-              //     c.selectedNavbar),
-            ),
-          );
-        },
       ),
       floatingActionButton: Stack(
         children: [

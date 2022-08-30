@@ -10,4 +10,5 @@ class AppRoutes {
   static const String pilihVoucherView = '/pilihVoucherView';
   static const String checkoutView = '/checkoutView';
   static const String profileView = '/profileView';
+  static const String dashboardView = '/dashboardView';
 }
