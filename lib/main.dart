@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:java_code/config/pages/app_pages.dart';
 import 'package:java_code/config/routes/app_routes.dart';
 import 'package:java_code/constant/commons/app_const.dart';
-import 'package:java_code/modules/features/login/view/ui/login_view.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+// Import the generated file
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -24,7 +31,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: AppConst.appName,
-          initialRoute: AppRoutes.dashboardView,
+          initialRoute: AppRoutes.login,
           getPages: AppPages.getPage(),
         );
       },

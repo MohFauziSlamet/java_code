@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:java_code/modules/features/login/controllers/login_register_controler.dart';
 import '/constant/core/assets_const.dart';
+import 'package:get/get.dart';
 
 class InputTextField extends StatelessWidget {
   InputTextField({
     Key? key,
     required this.hintText,
     required this.isPassword,
+    required this.controller,
+    this.isObscuretext = false,
+    this.keyboardType,
+    this.textInputAction,
   }) : super(key: key);
 
   String hintText;
   bool isPassword = false;
+  bool isObscuretext;
+  TextEditingController? controller;
+  TextInputType? keyboardType;
+  TextInputAction? textInputAction;
 
   @override
   Widget build(BuildContext context) {
+    Get.put(LoginController());
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 46.sp),
       child: TextField(
+        autocorrect: false,
+        obscureText: isObscuretext,
+        controller: controller,
+        keyboardType: keyboardType,
+        textInputAction: textInputAction,
         decoration: InputDecoration(
           hintText: hintText,
           border: const UnderlineInputBorder(
@@ -25,8 +41,17 @@ class InputTextField extends StatelessWidget {
             ),
           ),
           suffixIcon: isPassword
-              ? SizedBox(
-                  height: 17.h, child: Image.asset(AssetConts.iconEyeHidden))
+              ? InkWell(
+                  onTap: () {
+                    LoginController.to.isHidden.toggle();
+                  },
+                  child: SizedBox(
+                    height: 17.h,
+                    child: LoginController.to.isHidden.isTrue
+                        ? Image.asset(AssetConts.iconEyeHidden)
+                        : Icon(Icons.remove_red_eye_outlined),
+                  ),
+                )
               : const SizedBox(),
         ),
       ),

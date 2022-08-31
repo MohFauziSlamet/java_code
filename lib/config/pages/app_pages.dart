@@ -8,6 +8,7 @@ import 'package:java_code/modules/features/home/view/ui/dashboard_view.dart';
 import 'package:java_code/modules/features/home/view/ui/home_view.dart';
 import 'package:java_code/modules/features/loading_lokasi/view/ui/loading_lokasi_view.dart';
 import 'package:java_code/modules/features/login/view/ui/login_view.dart';
+import 'package:java_code/modules/features/login/view/ui/register_view.dart';
 import 'package:java_code/modules/features/pesanan/view/ui/pesanan_view.dart';
 import 'package:java_code/modules/features/pilih_voucher/view/ui/pilih_voucher_view.dart';
 import 'package:java_code/modules/features/profile/view/ui/profile_view.dart';
@@ -27,35 +28,39 @@ class AppPages {
       ),
       GetPage(
         name: AppRoutes.home,
-        page: () => HomeView(),
+        page: () => const HomeView(),
       ),
       GetPage(
         name: AppRoutes.detailPromo,
-        page: () => DetailPromoView(),
+        page: () => const DetailPromoView(),
       ),
       GetPage(
         name: AppRoutes.detailMenu,
-        page: () => DetailMenuView(),
+        page: () => const DetailMenuView(),
       ),
       GetPage(
         name: AppRoutes.pesanan,
-        page: () => PesananView(),
+        page: () => const PesananView(),
       ),
       GetPage(
         name: AppRoutes.pilihVoucherView,
-        page: () => PilihVoucherView(),
+        page: () => const PilihVoucherView(),
       ),
       GetPage(
         name: AppRoutes.checkoutView,
-        page: () => CheckoutView(),
+        page: () => const CheckoutView(),
       ),
       GetPage(
         name: AppRoutes.profileView,
-        page: () => ProfileView(),
+        page: () => const ProfileView(),
       ),
       GetPage(
         name: AppRoutes.dashboardView,
-        page: () => DashboardView(),
+        page: () => const DashboardView(),
+      ),
+      GetPage(
+        name: AppRoutes.registerView,
+        page: () => const RegisterView(),
       ),
     ];
   }

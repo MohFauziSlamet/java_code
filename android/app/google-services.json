@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "14665286854",
+    "project_id": "java-code-aac50",
+    "storage_bucket": "java-code-aac50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14665286854:android:cb94757839c4a9b8a083c7",
+        "android_client_info": {
+          "package_name": "com.example.java_code"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14665286854-ahk5k7vqd4birofjeivk4bfuj2ajvvj5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLo7t5469d9yHr8I25yq00drOLxRiFI2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "14665286854-ahk5k7vqd4birofjeivk4bfuj2ajvvj5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

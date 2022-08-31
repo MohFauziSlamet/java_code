@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:java_code/modules/features/home/controllers/home_controller.dart';
+import 'package:java_code/modules/features/login/controllers/login_register_controler.dart';
+import 'package:java_code/modules/features/profile/controller/profile_controller.dart';
 import 'package:java_code/modules/features/profile/view/component/bottom_sheet_dialog.dart';
 import '/modules/features/profile/view/component/garis_batas.dart';
 import '/config/themes/colours.dart';
@@ -17,7 +19,8 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RxInt indexBahasa = 0.obs;
+    Get.put(ProfileController());
+
     return Scaffold(
       backgroundColor: Colours.bgColors,
       body: SafeArea(
@@ -600,35 +603,86 @@ class ProfileView extends StatelessWidget {
                       ),
                       // BUTTON LOGOUT
                       SizedBox(height: 30.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 35.h,
-                            width: 205,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                primary: Colours.green2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.r),
-                                  side: const BorderSide(
+                      Obx(
+                        () => Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 35.h,
+                              width: 205,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Get.defaultDialog(
+                                    title: 'HALO',
+                                    middleText: 'Apakah kamu ingin keluar ?',
+                                    actions: [
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30.r),
+                                            side: const BorderSide(
+                                              color: Colours.green2,
+                                              width: 1,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        child: Text('Batal'),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colours.green2,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30.r),
+                                            side: const BorderSide(
+                                              color: Colours.white,
+                                              width: 1,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          if (ProfileController
+                                              .to.isLoading.isFalse) {
+                                            ProfileController.to.logout();
+                                          }
+                                        },
+                                        child: Text(
+                                          ProfileController.to.isLoading.isFalse
+                                              ? "Iya"
+                                              : 'Loading...',
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colours.green2,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.r),
+                                    side: const BorderSide(
+                                      color: Colours.white,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                                child: Text(
+                                  ProfileController.to.isLoading.isFalse
+                                      ? 'LOGOUT'
+                                      : 'Loading...',
+                                  style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 14.sp,
                                     color: Colours.white,
-                                    width: 1,
                                   ),
                                 ),
                               ),
-                              child: Text(
-                                'LOGOUT',
-                                style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 14.sp,
-                                  color: Colours.white,
-                                ),
-                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       SizedBox(height: 30.h),
                     ],

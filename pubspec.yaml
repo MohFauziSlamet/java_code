@@ -35,6 +35,12 @@ dependencies:
   google_fonts: ^3.0.1
   carousel_slider: ^4.1.1
   syncfusion_flutter_datepicker: ^20.2.40
+  firebase_auth: ^3.7.0
+  cloud_firestore: ^3.4.6
+  firebase_core: ^1.21.1
+  get_storage: ^2.0.3
+  intl: ^0.17.0
+  dio: ^4.0.6
 
 dev_dependencies:
   flutter_lints: ^2.0.0
