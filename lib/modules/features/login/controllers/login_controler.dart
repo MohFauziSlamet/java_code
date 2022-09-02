@@ -9,10 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:java_code/constant/core/hive_const.dart';
 
 import 'package:java_code/modules/features/login/repositories/login_repository.dart';
-import 'package:java_code/modules/models/user_data_res/akses.dart';
 
-import 'package:java_code/modules/models/user_data_res/data_user.dart';
-import 'package:java_code/modules/models/user_data_res/user.dart';
 import 'package:java_code/utils/services/hive_services.dart';
 import '/config/routes/app_routes.dart';
 import '/config/themes/colours.dart';
