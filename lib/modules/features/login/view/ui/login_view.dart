@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:java_code/modules/features/login/controllers/login_register_controler.dart';
+import 'package:java_code/modules/features/login/controllers/login_controler.dart';
 import '/modules/features/login/view/components/title_textfield.dart';
 import '/config/routes/app_routes.dart';
 import '/config/themes/colours.dart';
@@ -12,6 +12,9 @@ import '/modules/features/login/view/components/input_textfield.dart';
 class LoginView extends StatelessWidget {
   const LoginView({Key? key}) : super(key: key);
 
+  // final GlobalKey<FormState>?
+  // Form key
+
   @override
   Widget build(BuildContext context) {
     /// MEMANGGIL LoginController
@@ -20,6 +23,7 @@ class LoginView extends StatelessWidget {
       backgroundColor: Colours.bgColors,
       body: Obx(
         () => SafeArea(
+          // BUNGKUS DENGAN WIDGET YANG NAMANYA FORM, PASANG FORM KEY
           child: ListView(
             children: [
               /// LOGO JAVACODE
@@ -148,37 +152,45 @@ class LoginView extends StatelessWidget {
 
               /// MASUK DENGAN GOOGLE
               SizedBox(height: 9.h),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 46.sp),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.sp),
-                  color: Colours.white,
-                ),
-                height: 44.h,
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(AssetConts.iconGoogle),
-                      SizedBox(width: 17.w),
-                      Row(
+              InkWell(
+                onTap: () {
+                  LoginController.to.authLogin();
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 46.sp),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50.sp),
+                    color: Colours.white,
+                  ),
+                  height: 44.h,
+                  child: Material(
+                    borderRadius: BorderRadius.circular(50.sp),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Masuk menggunakan ",
-                            style: GoogleFonts.montserrat(
-                              color: Colours.darkBlack,
-                            ),
-                          ),
-                          Text(
-                            "Google",
-                            style: GoogleFonts.montserrat(
-                              color: Colours.darkBlack,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
+                          Image.asset(AssetConts.iconGoogle),
+                          SizedBox(width: 17.w),
+                          Row(
+                            children: [
+                              Text(
+                                "Masuk menggunakan ",
+                                style: GoogleFonts.montserrat(
+                                  color: Colours.darkBlack,
+                                ),
+                              ),
+                              Text(
+                                "Google",
+                                style: GoogleFonts.montserrat(
+                                  color: Colours.darkBlack,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          )
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ),
               ),

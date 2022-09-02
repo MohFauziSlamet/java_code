@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/config/themes/colours.dart';
 
+// ignore: must_be_immutable
 class JudulMenu extends StatelessWidget {
   JudulMenu({
     Key? key,
@@ -19,7 +20,7 @@ class JudulMenu extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 17),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: 19,
             height: 15,
             child: Image.asset(

@@ -1,4 +1,4 @@
-import 'package:get/get_state_manager/get_state_manager.dart';
+// ignore_for_file: avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

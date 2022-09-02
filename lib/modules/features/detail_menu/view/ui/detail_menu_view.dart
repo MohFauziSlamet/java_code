@@ -204,7 +204,7 @@ class DetailMenuView extends StatelessWidget {
                           widthIcon: 20.w,
                           heightIcon: 20.w,
                           nama: 'Level',
-                          child: CustomTextButton(
+                          child: customTextButton(
                               nama: '1',
                               ontap: () {
                                 Get.bottomSheet(
@@ -424,7 +424,7 @@ class DetailMenuView extends StatelessWidget {
                           widthIcon: 18.w,
                           heightIcon: 18.w,
                           nama: 'Topping',
-                          child: CustomTextButton(
+                          child: customTextButton(
                               nama: 'Mozarella',
                               ontap: () {
                                 Get.bottomSheet(
@@ -593,7 +593,7 @@ class DetailMenuView extends StatelessWidget {
                           widthIcon: 20.w,
                           heightIcon: 22.w,
                           nama: 'Catatan',
-                          child: CustomTextButton(
+                          child: customTextButton(
                             nama: 'Tambahkan Catatan...',
                             ontap: () {
                               Get.bottomSheet(
@@ -737,6 +737,7 @@ class DetailMenuView extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ButtonCard extends StatelessWidget {
   ButtonCard({
     Key? key,
@@ -807,7 +808,7 @@ class ButtonCard extends StatelessWidget {
   }
 }
 
-Widget CustomTextButton(
+Widget customTextButton(
     {required String nama, required void Function() ontap}) {
   return Material(
     child: InkWell(

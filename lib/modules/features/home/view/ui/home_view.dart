@@ -1,4 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,19 +17,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CarouselController _controller = CarouselController();
-
-    List<Widget> imageSliders = [
-      ImagePromo(imageUrl: AssetConts.drawDiskonKompetensi),
-      ImagePromo(imageUrl: AssetConts.drawDiskonMengaji),
-      ImagePromo(imageUrl: AssetConts.drawDiskonMengisiReview),
-      ImagePromo(imageUrl: AssetConts.drawDiskonTelatTigaKali),
-      ImagePromo(imageUrl: AssetConts.drawDiskonTidakTelat),
-      ImagePromo(imageUrl: AssetConts.drawVoucher100),
-      ImagePromo(imageUrl: AssetConts.drawVoucher200Bulan),
-      ImagePromo(imageUrl: AssetConts.drawVoucher200Karyawan),
-    ];
-
     Get.put(HomeController());
 
     return Scaffold(
@@ -240,10 +228,30 @@ class HomeView extends StatelessWidget {
             ),
 
             /// LIST MENU
+            ///
+            ///
+
+            // Obx(
+            // Container(
+            //   margin: EdgeInsets.symmetric(horizontal: 25.sp, vertical: 11.sp),
+            //   child:
+            //   (HomeControlelr.to.isloading.isTrue) ? Loading() :
+            //   ListView.builder(
+            //     physics: const NeverScrollableScrollPhysics(),
+            //     shrinkWrap: true,
+            //     length : HomeControlelr.to.listDariAPI.length
+            //     itemBuilder: (context, index) {
+            //       return Container(
+            //         listDariAPI[index].nama
+            //       );
+            //     },
+            //   ),
+            // )
+
             Container(
               margin: EdgeInsets.symmetric(horizontal: 25.sp, vertical: 11.sp),
               child: ListView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 children: [
                   /// JUDUL ITEM MENU

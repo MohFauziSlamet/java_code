@@ -4,55 +4,56 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get_storage/get_storage.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
-import 'package:java_code/constant/core/api_const.dart';
+import 'package:java_code/constant/core/hive_const.dart';
+
+import 'package:java_code/modules/features/login/repositories/login_repository.dart';
+import 'package:java_code/modules/models/user_data_res/akses.dart';
+
+import 'package:java_code/modules/models/user_data_res/data_user.dart';
+import 'package:java_code/modules/models/user_data_res/user.dart';
+import 'package:java_code/utils/services/hive_services.dart';
 import '/config/routes/app_routes.dart';
 import '/config/themes/colours.dart';
 
 class LoginController extends GetxController {
+  static void delete() => to.dispose();
   static LoginController get to => Get.find();
 
   RxBool isHidden = false.obs;
   RxBool isLoading = false.obs;
   RxBool rememberMe = false.obs;
-  late TextEditingController emailLoginC;
-  late TextEditingController passLoginC;
-  late TextEditingController emailRegisterC;
-  late TextEditingController passRegisterC;
-  late TextEditingController nameRegisterC;
-  late TextEditingController phoneRegisterC;
-  late TextEditingController dateRegisterC;
+
+  /// INISIASI TextEditingController
+  TextEditingController emailLoginC =
+      TextEditingController(text: 'admin@gmail.com');
+  TextEditingController passLoginC =
+      TextEditingController(text: 'admin@gmail.com');
+  TextEditingController emailRegisterC = TextEditingController();
+  TextEditingController passRegisterC = TextEditingController();
+  TextEditingController nameRegisterC = TextEditingController();
+  TextEditingController phoneRegisterC = TextEditingController();
+  TextEditingController dateRegisterC = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
 
   /// INISIASI CLOUD FIRESTORE
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final box = GetStorage();
 
-  @override
-  void onInit() {
-    emailLoginC = TextEditingController();
-    passLoginC = TextEditingController();
-    emailRegisterC = TextEditingController();
-    passRegisterC = TextEditingController();
-    nameRegisterC = TextEditingController();
-    phoneRegisterC = TextEditingController();
-    dateRegisterC = TextEditingController();
-    super.onInit();
+  /// REPOSITORY
+  LoginRepository repository = LoginRepository();
+
+  Future<void> authLogin() {
+    return repository.authLogin();
   }
 
-  // @override
-  // void onClose() {
-  //   emailLoginC.dispose();
-  //   passLoginC.dispose();
-  //   emailRegisterC.dispose();
-  //   passRegisterC.dispose();
-  //   nameRegisterC.dispose();
-  //   phoneRegisterC.dispose();
-  //   dateRegisterC.dispose();
-  //   super.onClose();
-  // }
+  Future<bool> autoLogin() {
+    return repository.autoLogin();
+  }
+
+  Future<void> firstInitialized() {
+    return repository.firstInitialized();
+  }
 
   /// LOGIN FIREBASE
   void login() async {
@@ -318,21 +319,35 @@ class LoginController extends GetxController {
   }
 
   /// POST LOGIN ENDPOINT
-  void postLogin() async {
+  Future<void> postLogin() async {
     /// CEK EMAIL DAN PASSWORD TIDAK BOLEH KOSONG
     if (emailLoginC.text.isNotEmpty && passLoginC.text.isNotEmpty) {
+      // TODO : VALIDATOR TEXT FIELD LAKUKAN DI VIEW PAKAI FORM DAN TEXTFORM FIELD
       if (GetUtils.isEmail(emailLoginC.text)) {
         try {
           isLoading.value = true;
+          print('proses post data');
+          final result = await repository.loginWithEndpoint(
+              email: emailLoginC.text, password: passLoginC.text);
 
-          var result = await Dio()
-              .post('${ApiConst.baseURL}${ApiConst.postLoginURL}', data: {
-            "email": emailLoginC.text,
-            "password": passLoginC.text,
-          });
+          if (result.statusCode == 200) {
+            /// MEMASUKAN DATA KEDALAM LOCAL DB MENGGUNAKAN HIVE
+            HiveServices.putAkses(
+                HiveConst.aksesHiveKey, result.data!.user!.akses);
+            HiveServices.putToken(HiveConst.dataUserTokenHiveKey, result.data!);
+            HiveServices.putUserData(HiveConst.aksesHiveKey, result.data!.user);
 
-          print(result.toString());
-          Get.offAllNamed(AppRoutes.dashboardView);
+            Get.offAllNamed(AppRoutes.loadingLokasi);
+          } else if (result.statusCode == 505 || result.statusCode == 500) {
+            Get.snackbar(
+              'Connection Timeout',
+              'We can\'t connect to the server. Please check your internet connection',
+              icon: const Icon(Icons.close, color: Colors.white),
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colours.red,
+              colorText: Colors.white,
+            );
+          }
           Get.snackbar(
             "Berhasil",
             "Kamu berhasil login",
@@ -341,6 +356,7 @@ class LoginController extends GetxController {
             duration: const Duration(seconds: 1),
           );
         } catch (e) {
+          print(e.toString());
           Get.snackbar(
             "Terjadi Kesalahan",
             "Tidak dapat login",

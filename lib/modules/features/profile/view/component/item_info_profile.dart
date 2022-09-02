@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:java_code/config/themes/colours.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// ignore: must_be_immutable
 class ItemInfoProfile extends StatelessWidget {
   ItemInfoProfile({
     Key? key,

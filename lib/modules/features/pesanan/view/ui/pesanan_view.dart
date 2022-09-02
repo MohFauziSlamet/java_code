@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:java_code/config/routes/app_routes.dart';
 import 'package:java_code/config/themes/colours.dart';
 import 'package:java_code/constant/core/assets_const.dart';
-import 'package:java_code/modules/features/detail_menu/view/ui/detail_menu_view.dart';
+
 import 'package:java_code/modules/features/home/view/components/item_menu.dart';
 import 'package:java_code/modules/features/home/view/components/judul_menu.dart';
 
@@ -476,7 +476,7 @@ class PesananView extends StatelessWidget {
                                     color: Colours.darkGrey,
                                   ),
                                   titlePadding: EdgeInsets.only(top: 24.sp),
-                                  content: Container(
+                                  content: SizedBox(
                                     width: 338.w,
                                     child: Column(
                                       children: [
@@ -485,11 +485,11 @@ class PesananView extends StatelessWidget {
                                           style: GoogleFonts.montserrat(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 16.sp,
-                                            color: Color(0xff969696),
+                                            color: const Color(0xff969696),
                                           ),
                                         ),
                                         SizedBox(height: 31.h),
-                                        Container(
+                                        SizedBox(
                                           height: 142.w,
                                           width: 142.w,
                                           child: Center(
@@ -539,7 +539,7 @@ class PesananView extends StatelessWidget {
                                               ),
                                               titlePadding:
                                                   EdgeInsets.only(top: 24.sp),
-                                              content: Container(
+                                              content: SizedBox(
                                                 width: 338.w,
                                                 child: Column(
                                                   children: [
@@ -550,8 +550,8 @@ class PesananView extends StatelessWidget {
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         fontSize: 16.sp,
-                                                        color:
-                                                            Color(0xff969696),
+                                                        color: const Color(
+                                                            0xff969696),
                                                       ),
                                                     ),
                                                     SizedBox(height: 24.h),
@@ -572,7 +572,7 @@ class PesananView extends StatelessWidget {
                                                                           .circular(
                                                                               10),
                                                                   borderSide:
-                                                                      BorderSide(
+                                                                      const BorderSide(
                                                                           color:
                                                                               Colours.grey),
                                                                 ),
@@ -583,7 +583,7 @@ class PesananView extends StatelessWidget {
                                                                           .circular(
                                                                               10),
                                                                   borderSide:
-                                                                      BorderSide(
+                                                                      const BorderSide(
                                                                           color:
                                                                               Colours.green2),
                                                                 ),

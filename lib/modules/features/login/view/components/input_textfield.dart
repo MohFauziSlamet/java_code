@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:java_code/modules/features/login/controllers/login_register_controler.dart';
+import 'package:java_code/modules/features/login/controllers/login_controler.dart';
 import '/constant/core/assets_const.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class InputTextField extends StatelessWidget {
   InputTextField({
     Key? key,
@@ -27,12 +28,21 @@ class InputTextField extends StatelessWidget {
     Get.put(LoginController());
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 46.sp),
+      // TODO : TEXTFIELD -> TEXTFORMFIELD
       child: TextField(
         autocorrect: false,
         obscureText: isObscuretext,
         controller: controller,
         keyboardType: keyboardType,
         textInputAction: textInputAction,
+        // Validator
+// validator: (value) {
+//   if(!value.isEmail)
+//   {
+//     return 'email invalid';
+//   }
+
+// },
         decoration: InputDecoration(
           hintText: hintText,
           border: const UnderlineInputBorder(
@@ -49,7 +59,7 @@ class InputTextField extends StatelessWidget {
                     height: 17.h,
                     child: LoginController.to.isHidden.isTrue
                         ? Image.asset(AssetConts.iconEyeHidden)
-                        : Icon(Icons.remove_red_eye_outlined),
+                        : const Icon(Icons.remove_red_eye_outlined),
                   ),
                 )
               : const SizedBox(),

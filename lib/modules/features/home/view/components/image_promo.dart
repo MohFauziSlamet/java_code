@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:java_code/config/routes/app_routes.dart';
 
+// ignore: must_be_immutable
 class ImagePromo extends StatelessWidget {
   ImagePromo({
     Key? key,

@@ -7,4 +7,7 @@ class ApiConst {
 
   /// POST LOGIN
   static const String postLoginURL = 'auth/login';
+
+  /// GET ALL MENU
+  static const String getAllMenuURL = 'menu/all';
 }

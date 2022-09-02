@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '14665286854',
     projectId: 'java-code-aac50',
     storageBucket: 'java-code-aac50.appspot.com',
-    iosClientId: '14665286854-2vlsik4nlegjp4id6jmalb9rrjkdn3pu.apps.googleusercontent.com',
+    iosClientId:
+        '14665286854-2vlsik4nlegjp4id6jmalb9rrjkdn3pu.apps.googleusercontent.com',
     iosBundleId: 'com.example.javaCode',
   );
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:java_code/config/themes/colours.dart';
 import 'package:java_code/constant/core/assets_const.dart';
 
+// ignore: must_be_immutable
 class BottomSheetDialog extends StatelessWidget {
   BottomSheetDialog({
     Key? key,
@@ -40,7 +40,7 @@ class BottomSheetDialog extends StatelessWidget {
             width: 104.w,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
-              color: Color(0xffc4c4c4).withOpacity(0.5),
+              color: const Color(0xffc4c4c4).withOpacity(0.5),
             ),
           ),
           SizedBox(height: 13.h),

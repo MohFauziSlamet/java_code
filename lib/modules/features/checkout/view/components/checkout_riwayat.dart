@@ -80,7 +80,7 @@ class CheckoutRiwayat extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {},
-                                child: Container(
+                                child: SizedBox(
                                   height: 20.h,
                                   width: 18.w,
                                   child: Image.asset(AssetConts.iconKalender),
