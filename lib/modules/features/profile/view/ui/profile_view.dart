@@ -1,12 +1,9 @@
-import 'dart:ui';
-
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:java_code/modules/features/home/controllers/home_controller.dart';
-import 'package:java_code/modules/features/login/controllers/login_register_controler.dart';
+
 import 'package:java_code/modules/features/profile/controller/profile_controller.dart';
 import 'package:java_code/modules/features/profile/view/component/bottom_sheet_dialog.dart';
 import '/modules/features/profile/view/component/garis_batas.dart';
@@ -46,7 +43,7 @@ class ProfileView extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 15.h),
-                    Container(
+                    SizedBox(
                       height: 40.h,
                       width: ScreenUtil().screenWidth,
                       child: Column(
@@ -207,9 +204,7 @@ class ProfileView extends StatelessWidget {
                                         height: 19.w,
                                         width: 19.w,
                                         child: InkWell(
-                                          onTap: () {
-                                            print('Menekan tanggal');
-                                          },
+                                          onTap: () {},
                                           child: Image.asset(
                                             AssetConts.iconKalender,
                                             color: Colours.green2,
@@ -297,7 +292,7 @@ class ProfileView extends StatelessWidget {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(30),
-                                            color: Color(0xffc4c4c4)
+                                            color: const Color(0xffc4c4c4)
                                                 .withOpacity(0.5),
                                           ),
                                         ),
@@ -630,7 +625,7 @@ class ProfileView extends StatelessWidget {
                                         onPressed: () {
                                           Get.back();
                                         },
-                                        child: Text('Batal'),
+                                        child: const Text('Batal'),
                                       ),
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -647,7 +642,7 @@ class ProfileView extends StatelessWidget {
                                         onPressed: () {
                                           if (ProfileController
                                               .to.isLoading.isFalse) {
-                                            ProfileController.to.logout();
+                                            ProfileController.to.keluar();
                                           }
                                         },
                                         child: Text(

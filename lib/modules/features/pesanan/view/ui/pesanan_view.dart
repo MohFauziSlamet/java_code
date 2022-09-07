@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:java_code/config/routes/app_routes.dart';
 import 'package:java_code/config/themes/colours.dart';
 import 'package:java_code/constant/core/assets_const.dart';
-import 'package:java_code/modules/features/detail_menu/view/ui/detail_menu_view.dart';
-import 'package:java_code/modules/features/home/view/components/item_menu.dart';
+import 'package:java_code/modules/features/home/controllers/home_controller.dart';
 import 'package:java_code/modules/features/home/view/components/judul_menu.dart';
 
 class PesananView extends StatelessWidget {
@@ -86,11 +86,11 @@ class PesananView extends StatelessWidget {
                         iconMenu: AssetConts.iconMakanan, judulMenu: "Makanan"),
 
                     /// ITEM MENU
-                    const ItemMenu(),
-                    const ItemMenu(),
-                    const ItemMenu(),
-                    const ItemMenu(),
-                    const ItemMenu(),
+                    // const ItemMenu(),
+                    // const ItemMenu(),
+                    // const ItemMenu(),
+                    // const ItemMenu(),
+                    // const ItemMenu(),
 
                     /// JUDUL ITEM MENU
                     SizedBox(height: 20.h),
@@ -98,11 +98,11 @@ class PesananView extends StatelessWidget {
                         iconMenu: AssetConts.iconMinuman, judulMenu: "Minuman"),
 
                     /// ITEM MENU
-                    const ItemMenu(),
-                    const ItemMenu(),
-                    const ItemMenu(),
-                    const ItemMenu(),
-                    const ItemMenu(),
+                    // const ItemMenu(),
+                    // const ItemMenu(),
+                    // const ItemMenu(),
+                    // const ItemMenu(),
+                    // const ItemMenu(),
                   ],
                 ),
               ),
@@ -453,21 +453,6 @@ class PesananView extends StatelessWidget {
                             margin: const EdgeInsets.only(right: 10, left: 20),
                             child: ElevatedButton(
                               onPressed: () {
-                                // Get.dialog(
-                                //   SizedBox(
-                                //     child: Container(
-                                //       width: 338.w,
-                                //       height: 342.h,
-                                //       child: Column(
-                                //         children: const [
-                                //           Text("Verifikasi Pesanan"),
-                                //         ],
-                                //       ),
-                                //     ),
-                                //   ),
-                                //   useSafeArea: true,
-                                // );
-
                                 Get.defaultDialog(
                                   title: 'Verifikasi Pesanan',
                                   titleStyle: GoogleFonts.montserrat(
@@ -476,7 +461,7 @@ class PesananView extends StatelessWidget {
                                     color: Colours.darkGrey,
                                   ),
                                   titlePadding: EdgeInsets.only(top: 24.sp),
-                                  content: Container(
+                                  content: SizedBox(
                                     width: 338.w,
                                     child: Column(
                                       children: [
@@ -485,11 +470,11 @@ class PesananView extends StatelessWidget {
                                           style: GoogleFonts.montserrat(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 16.sp,
-                                            color: Color(0xff969696),
+                                            color: const Color(0xff969696),
                                           ),
                                         ),
                                         SizedBox(height: 31.h),
-                                        Container(
+                                        SizedBox(
                                           height: 142.w,
                                           width: 142.w,
                                           child: Center(
@@ -539,7 +524,7 @@ class PesananView extends StatelessWidget {
                                               ),
                                               titlePadding:
                                                   EdgeInsets.only(top: 24.sp),
-                                              content: Container(
+                                              content: SizedBox(
                                                 width: 338.w,
                                                 child: Column(
                                                   children: [
@@ -550,8 +535,8 @@ class PesananView extends StatelessWidget {
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         fontSize: 16.sp,
-                                                        color:
-                                                            Color(0xff969696),
+                                                        color: const Color(
+                                                            0xff969696),
                                                       ),
                                                     ),
                                                     SizedBox(height: 24.h),
@@ -572,7 +557,7 @@ class PesananView extends StatelessWidget {
                                                                           .circular(
                                                                               10),
                                                                   borderSide:
-                                                                      BorderSide(
+                                                                      const BorderSide(
                                                                           color:
                                                                               Colours.grey),
                                                                 ),
@@ -583,7 +568,7 @@ class PesananView extends StatelessWidget {
                                                                           .circular(
                                                                               10),
                                                                   borderSide:
-                                                                      BorderSide(
+                                                                      const BorderSide(
                                                                           color:
                                                                               Colours.green2),
                                                                 ),

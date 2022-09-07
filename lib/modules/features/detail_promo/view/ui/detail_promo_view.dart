@@ -110,7 +110,7 @@ class DetailPromoView extends StatelessWidget {
                 children: [
                   SizedBox(height: 46.h),
                   Container(
-                    margin: EdgeInsets.only(left: 22),
+                    margin: const EdgeInsets.only(left: 22),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

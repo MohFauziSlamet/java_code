@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:java_code/config/routes/app_routes.dart';
 import 'package:java_code/modules/features/checkout/view/ui/checkout_view.dart';
@@ -12,6 +11,7 @@ import 'package:java_code/modules/features/login/view/ui/register_view.dart';
 import 'package:java_code/modules/features/pesanan/view/ui/pesanan_view.dart';
 import 'package:java_code/modules/features/pilih_voucher/view/ui/pilih_voucher_view.dart';
 import 'package:java_code/modules/features/profile/view/ui/profile_view.dart';
+import 'package:java_code/modules/features/splash_screen/view/ui/splash_view.dart';
 
 class AppPages {
   AppPages._();
@@ -20,7 +20,7 @@ class AppPages {
     return [
       GetPage(
         name: AppRoutes.login,
-        page: () => const LoginView(),
+        page: () => LoginView(),
       ),
       GetPage(
         name: AppRoutes.loadingLokasi,
@@ -61,6 +61,10 @@ class AppPages {
       GetPage(
         name: AppRoutes.registerView,
         page: () => const RegisterView(),
+      ),
+      GetPage(
+        name: AppRoutes.spalshScreen,
+        page: () => const SplashScreen(),
       ),
     ];
   }

@@ -1,11 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import '/modules/features/login/controllers/login_register_controler.dart';
+import '../../controllers/login_controler.dart';
 import '/modules/features/login/view/components/title_textfield.dart';
 import '/config/routes/app_routes.dart';
 import '/config/themes/colours.dart';
@@ -96,8 +94,6 @@ class RegisterView extends StatelessWidget {
                   width: 19.w,
                   child: InkWell(
                     onTap: () async {
-                      print('menampilkan date diaog');
-
                       DateTime? datePicked = await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
@@ -107,7 +103,6 @@ class RegisterView extends StatelessWidget {
 
                       LoginController.to.dateRegisterC.text =
                           DateFormat().add_yMd().format(datePicked!);
-                      print(LoginController.to.dateRegisterC.text);
                     },
                     child: Image.asset(AssetConts.iconKalender),
                   ),

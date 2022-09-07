@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 import 'package:java_code/config/themes/colours.dart';
 import 'package:java_code/constant/core/assets_const.dart';
+import 'package:java_code/modules/features/loading_lokasi/controllers/lokasi_controller.dart';
 
 class LoadingLokasi extends StatelessWidget {
   const LoadingLokasi({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Get.put(LoadingController());
+
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -56,18 +60,30 @@ class LoadingLokasi extends StatelessWidget {
                   ),
 
                   /// ALAMAT LOKASI
-                  SizedBox(
-                    width: 245.w,
-                    height: 170.h,
-                    child: Text(
-                      "Perumahan Griyashanta Permata N-524, Mojolangu, Kec. Lowokwaru, Kota Malang",
-                      style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 22.sp,
-                        color: Colours.darkBlack,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                  FutureBuilder(
+                    future: LoadingController.to.initLocation(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return Obx(
+                        () => SizedBox(
+                          width: 245.w,
+                          height: 170.h,
+                          child: Text(
+                            LoadingController.to.address.value,
+                            style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 22.sp,
+                              color: Colours.darkBlack,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
