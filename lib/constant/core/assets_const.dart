@@ -66,4 +66,9 @@ class AssetConts {
   static const String iconPenilaian = 'assets/images/ic_penilaian.png';
   static const String iconIndFlag = 'assets/images/ic_indFlag.png';
   static const String iconEngFlag = 'assets/images/ic_engFlag.png';
+  static const String iconEmptyMenu = 'assets/images/ic_empty_menu.jpeg';
+  static const String iconHapusItem = 'assets/images/ic_empty_menu.jpeg';
+
+  /// LOTTIE
+  static const String lotSpalshSreen = 'assets/images/ic_hapus_item.png';
 }

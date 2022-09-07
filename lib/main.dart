@@ -8,6 +8,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:java_code/constant/core/hive_const.dart';
+import 'package:java_code/modules/features/splash_screen/controller/splash_controller.dart';
+import 'package:java_code/modules/features/splash_screen/view/ui/splash_view.dart';
 import 'package:java_code/modules/models/user_data_res/akses.dart';
 import 'package:java_code/modules/models/user_data_res/data_user.dart';
 import 'package:java_code/modules/models/user_data_res/user.dart';
@@ -31,9 +33,9 @@ void main() async {
   Hive.registerAdapter(UserAdapter());
 
   /// OPEN BOX
-  Hive.openBox<Akses>(HiveConst.aksesHiveBox);
-  Hive.openBox<DataUser>(HiveConst.dataUserTokenHiveBox);
-  Hive.openBox<User>(HiveConst.userHiveBox);
+  await Hive.openBox<Akses>(HiveConst.aksesHiveBox);
+  await Hive.openBox<DataUser>(HiveConst.dataUserTokenHiveBox);
+  await Hive.openBox<User>(HiveConst.userHiveBox);
   runApp(const MyApp());
 }
 
@@ -43,17 +45,34 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Get.put(SplashScreenController(), permanent: true);
     return ScreenUtilInit(
       designSize: AppConst.designSize,
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: AppConst.appName,
-          initialRoute: AppRoutes.login,
-          getPages: AppPages.getPage(),
-        );
+        return FutureBuilder(
+            future: Future.delayed(const Duration(seconds: 3)),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Obx(
+                  () => GetMaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    title: AppConst.appName,
+                    initialRoute: SplashScreenController.to.isAuth.isTrue
+                        ? AppRoutes.dashboardView
+                        : AppRoutes.login,
+                    getPages: AppPages.getPage(),
+                  ),
+                );
+              }
+              return FutureBuilder(
+                future: SplashScreenController.to.firstInitialized(),
+                builder: (context, snapshot) {
+                  return const SplashScreen();
+                },
+              );
+            });
       },
     );
   }

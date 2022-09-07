@@ -14,6 +14,9 @@ class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(HomeController());
+
+    // HomeController.to.getAllMenu();
+
     RxInt index = HomeController.to.pageIndex;
     return Scaffold(
       body: Obx(

@@ -12,6 +12,7 @@ class LoadingLokasi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(LoadingController());
+
     return Scaffold(
       body: SafeArea(
         child: Stack(

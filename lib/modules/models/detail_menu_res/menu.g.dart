@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'datum.dart';
+part of 'menu.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Datum _$DatumFromJson(Map<String, dynamic> json) => Datum(
+Menu _$MenuFromJson(Map<String, dynamic> json) => Menu(
       idMenu: json['id_menu'] as int?,
       nama: json['nama'] as String?,
       kategori: json['kategori'] as String?,
@@ -14,10 +14,9 @@ Datum _$DatumFromJson(Map<String, dynamic> json) => Datum(
       deskripsi: json['deskripsi'] as String?,
       foto: json['foto'] as String?,
       status: json['status'] as int?,
-      count: json['count'] as int? ?? 0,
     );
 
-Map<String, dynamic> _$DatumToJson(Datum instance) => <String, dynamic>{
+Map<String, dynamic> _$MenuToJson(Menu instance) => <String, dynamic>{
       'id_menu': instance.idMenu,
       'nama': instance.nama,
       'kategori': instance.kategori,
@@ -25,5 +24,4 @@ Map<String, dynamic> _$DatumToJson(Datum instance) => <String, dynamic>{
       'deskripsi': instance.deskripsi,
       'foto': instance.foto,
       'status': instance.status,
-      'count': instance.count,
     };

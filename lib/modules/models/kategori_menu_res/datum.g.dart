@@ -14,7 +14,6 @@ Datum _$DatumFromJson(Map<String, dynamic> json) => Datum(
       deskripsi: json['deskripsi'] as String?,
       foto: json['foto'] as String?,
       status: json['status'] as int?,
-      count: json['count'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$DatumToJson(Datum instance) => <String, dynamic>{
@@ -25,5 +24,4 @@ Map<String, dynamic> _$DatumToJson(Datum instance) => <String, dynamic>{
       'deskripsi': instance.deskripsi,
       'foto': instance.foto,
       'status': instance.status,
-      'count': instance.count,
     };

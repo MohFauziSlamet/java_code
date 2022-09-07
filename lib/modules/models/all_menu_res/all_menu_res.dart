@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
 
 import 'datum.dart';
@@ -8,9 +9,13 @@ part 'all_menu_res.g.dart';
 class AllMenuRes {
   @JsonKey(name: 'status_code')
   int? statusCode;
+
   List<Datum>? data;
 
-  AllMenuRes({this.statusCode, this.data});
+  AllMenuRes({
+    this.statusCode,
+    this.data,
+  });
 
   factory AllMenuRes.fromJson(Map<String, dynamic> json) {
     return _$AllMenuResFromJson(json);

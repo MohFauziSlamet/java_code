@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'datum.g.dart';
 
 @JsonSerializable()
@@ -11,9 +12,6 @@ class Datum {
   String? deskripsi;
   String? foto;
   int? status;
-  int? count;
-  // @JsonKey(count: '0')
-  // RxInt count = 0.obs;
 
   Datum({
     this.idMenu,
@@ -23,7 +21,6 @@ class Datum {
     this.deskripsi,
     this.foto,
     this.status,
-    this.count = 0,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);

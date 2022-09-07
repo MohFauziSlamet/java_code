@@ -642,7 +642,7 @@ class ProfileView extends StatelessWidget {
                                         onPressed: () {
                                           if (ProfileController
                                               .to.isLoading.isFalse) {
-                                            ProfileController.to.logout();
+                                            ProfileController.to.keluar();
                                           }
                                         },
                                         child: Text(

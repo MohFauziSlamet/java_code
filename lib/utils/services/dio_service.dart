@@ -10,14 +10,18 @@ class DioService {
   //* Methods (Function)
   static Dio dioCall({int connectTimeout = 20000}) {
     // Variables
+    // 'Token user login : ${DataUserManager.getAllNotes().toMap()[HiveConst.dataUserTokenHiveKey]!.token}'
     late Map<String, dynamic> header;
-    String? token = DataUserManager.getAllNotes()
-        .toMap()[HiveConst.dataUserTokenHiveKey]!
-        .token;
+    String? token = DataUserManager?.getAllNotes()
+            .toMap()[HiveConst.dataUserTokenHiveKey]
+            ?.token ??
+        '';
+    // print('dio servis');
+    // print(token);
 
     header = {
       "Content-Type": "application/json",
-      "Authorization": "Bearer$token",
+      "token": token,
     };
 
     var dio = Dio(

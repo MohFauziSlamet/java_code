@@ -22,7 +22,7 @@ class JudulMenu extends StatelessWidget {
         children: [
           SizedBox(
             width: 19,
-            height: 15,
+            height: 17,
             child: Image.asset(
               iconMenu,
               fit: BoxFit.cover,

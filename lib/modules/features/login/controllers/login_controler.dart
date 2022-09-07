@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:java_code/constant/core/hive_const.dart';
 
 import 'package:java_code/modules/features/login/repositories/login_repository.dart';
+import 'package:java_code/modules/models/user_data_res/data_user.dart';
 
 import 'package:java_code/utils/services/hive_services.dart';
 import '/config/routes/app_routes.dart';
@@ -25,8 +26,7 @@ class LoginController extends GetxController {
   /// INISIASI TextEditingController
   TextEditingController emailLoginC =
       TextEditingController(text: 'admin@gmail.com');
-  TextEditingController passLoginC =
-      TextEditingController(text: 'admin@gmail.com');
+  TextEditingController passLoginC = TextEditingController(text: 'admin');
   TextEditingController emailRegisterC = TextEditingController();
   TextEditingController passRegisterC = TextEditingController();
   TextEditingController nameRegisterC = TextEditingController();
@@ -39,6 +39,71 @@ class LoginController extends GetxController {
 
   /// REPOSITORY
   LoginRepository repository = LoginRepository();
+
+  /// POST LOGIN ENDPOINT
+  Future<void> postLogin() async {
+    /// CEK EMAIL DAN PASSWORD TIDAK BOLEH KOSONG
+    if (emailLoginC.text.isNotEmpty && passLoginC.text.isNotEmpty) {
+      //////////////////
+      try {
+        isLoading.value = true;
+        isLoading.value = true;
+        print('DEBUG LOGIN CONTROLLER');
+        print('proses post data');
+        final result = await repository.loginWithEndpoint(
+            email: emailLoginC.text, password: passLoginC.text);
+
+        if (result.statusCode == 200) {
+          /// MEMASUKAN DATA KEDALAM LOCAL DB MENGGUNAKAN HIVE
+          HiveServices.putAkses(
+              HiveConst.aksesHiveKey, result.data!.user!.akses);
+          HiveServices.putToken(HiveConst.dataUserTokenHiveKey, result.data!);
+          HiveServices.putUserData(HiveConst.aksesHiveKey, result.data!.user);
+          print('DEBUG LOGIN CONTROLLER');
+          print(
+              'Token user login : ${DataUserManager.getAllNotes().toMap()[HiveConst.dataUserTokenHiveKey]!.token}');
+          Get.offAllNamed(AppRoutes.loadingLokasi);
+        } else if (result.statusCode == 505 || result.statusCode == 500) {
+          Get.snackbar(
+            'Connection Timeout',
+            'We can\'t connect to the server. Please check your internet connection',
+            icon: const Icon(Icons.close, color: Colors.white),
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colours.red,
+            colorText: Colors.white,
+          );
+        }
+        Get.snackbar(
+          "Berhasil",
+          "Kamu berhasil login",
+          backgroundColor: Colours.green2,
+          overlayBlur: 1,
+          duration: const Duration(seconds: 1),
+        );
+      } catch (e) {
+        print(e.toString());
+        Get.snackbar(
+          "Terjadi Kesalahan",
+          "Tidak dapat login",
+          backgroundColor: Colours.green2,
+          overlayBlur: 1,
+          duration: const Duration(seconds: 1),
+        );
+      } finally {
+        isLoading.value = false;
+      }
+    } else {
+      Get.snackbar(
+        "Terjadi Kesalahan",
+        "Semua Form Harus Diisi",
+        backgroundColor: Colours.green2,
+        overlayBlur: 1,
+        duration: const Duration(seconds: 1),
+      );
+    }
+  }
+
+  ///
 
   Future<void> authLogin() {
     return repository.authLogin();
@@ -305,75 +370,6 @@ class LoginController extends GetxController {
       }
     } else {
       /// KETIKA ADA FORM YANG TIDAK DIISI
-      Get.snackbar(
-        "Terjadi Kesalahan",
-        "Semua Form Harus Diisi",
-        backgroundColor: Colours.green2,
-        overlayBlur: 1,
-        duration: const Duration(seconds: 1),
-      );
-    }
-  }
-
-  /// POST LOGIN ENDPOINT
-  Future<void> postLogin() async {
-    /// CEK EMAIL DAN PASSWORD TIDAK BOLEH KOSONG
-    if (emailLoginC.text.isNotEmpty && passLoginC.text.isNotEmpty) {
-      // TODO : VALIDATOR TEXT FIELD LAKUKAN DI VIEW PAKAI FORM DAN TEXTFORM FIELD
-      if (GetUtils.isEmail(emailLoginC.text)) {
-        try {
-          isLoading.value = true;
-          print('proses post data');
-          final result = await repository.loginWithEndpoint(
-              email: emailLoginC.text, password: passLoginC.text);
-
-          if (result.statusCode == 200) {
-            /// MEMASUKAN DATA KEDALAM LOCAL DB MENGGUNAKAN HIVE
-            HiveServices.putAkses(
-                HiveConst.aksesHiveKey, result.data!.user!.akses);
-            HiveServices.putToken(HiveConst.dataUserTokenHiveKey, result.data!);
-            HiveServices.putUserData(HiveConst.aksesHiveKey, result.data!.user);
-
-            Get.offAllNamed(AppRoutes.loadingLokasi);
-          } else if (result.statusCode == 505 || result.statusCode == 500) {
-            Get.snackbar(
-              'Connection Timeout',
-              'We can\'t connect to the server. Please check your internet connection',
-              icon: const Icon(Icons.close, color: Colors.white),
-              snackPosition: SnackPosition.TOP,
-              backgroundColor: Colours.red,
-              colorText: Colors.white,
-            );
-          }
-          Get.snackbar(
-            "Berhasil",
-            "Kamu berhasil login",
-            backgroundColor: Colours.green2,
-            overlayBlur: 1,
-            duration: const Duration(seconds: 1),
-          );
-        } catch (e) {
-          print(e.toString());
-          Get.snackbar(
-            "Terjadi Kesalahan",
-            "Tidak dapat login",
-            backgroundColor: Colours.green2,
-            overlayBlur: 1,
-            duration: const Duration(seconds: 1),
-          );
-        } finally {
-          isLoading.value = false;
-        }
-      } else {
-        Get.snackbar(
-          "Terjadi Kesalahan",
-          "Email Yang Anda Masukan, Bukan Email",
-          backgroundColor: Colours.green2,
-          overlayBlur: 1,
-          duration: const Duration(seconds: 1),
-        );
-      }
-    } else {
       Get.snackbar(
         "Terjadi Kesalahan",
         "Semua Form Harus Diisi",

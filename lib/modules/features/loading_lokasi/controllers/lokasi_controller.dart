@@ -11,6 +11,9 @@ class LoadingController extends GetxController {
   RxString address = 'Tidak dapat menemukan lokasi'.obs;
   bool isFindLocation = false;
 
+  // Get.put(HomeController());
+  // HomeController.to.getAllMenu();
+
   /// INISIASI FIREABASE cloud_firestore
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -33,7 +36,7 @@ class LoadingController extends GetxController {
     }
 
     if (isFindLocation == true) {
-      Future.delayed(const Duration(seconds: 2))
+      Future.delayed(const Duration(seconds: 1))
           .then((_) => Get.offAllNamed(AppRoutes.dashboardView));
     }
   }

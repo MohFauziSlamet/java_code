@@ -10,34 +10,6 @@ import 'package:java_code/utils/services/dio_service.dart';
 import 'package:get/get.dart';
 
 class LoginRepository {
-  /// -----------------------LOGIN DENGAN ENDPOINT-----------------------
-
-  // Future<YukkAccessRes> getYukkAccessAPI({required String phoneNumber}) async {
-  //   try {
-  //     Response response = await shared_inisa.ApiService.dioCall().post(
-  //       ApiConst.getYukkAccess,
-  //       queryParameters: {
-  //         "number_phone": phoneNumber,
-  //       },
-  //     );
-
-  //     return YukkAccessRes.fromJson(response.data);
-  //   } on DioError catch (e) {
-  //     if (e.type == DioErrorType.connectTimeout) {
-  //       return YukkAccessRes(message: "Connection Timeout");
-  //     } else {
-  //       if (e.response == null) {
-  //         return YukkAccessRes(message: "Unknown Error");
-  //       } else {
-  //         print(
-  //             '[POST - ${ApiConst.getYukkAccess}] ERROR ${e.response!.statusCode} ==> ${e.response!.data}');
-
-  //         return YukkAccessRes.fromJson(e.response!.data);
-  //       }
-  //     }
-  //   }
-  // }
-
   Future<DataUserRes> loginWithEndpoint({
     required String email,
     required String password,
@@ -63,23 +35,23 @@ class LoginRepository {
         Get.snackbar('Terjadi Kesalahan', 'Connection Timeout');
         // ignore: avoid_print
         print(
-            '[POST - ${ApiConst.postLoginURL}] ERROR ${e.response!.statusCode} ==> ${e.response!.data}');
+            '[POST - ${ApiConst.postLoginURL}] ERROR ${e.response?.statusCode} ==> ${e.response?.data}');
 
-        return DataUserRes.fromJson(e.response!.data);
+        return DataUserRes.fromJson(e.response?.data);
       } else {
         if (e.response == null) {
           Get.snackbar('Terjadi Kesalahan', 'Unknown Error');
           // ignore: avoid_print
           print(
-              '[POST - ${ApiConst.postLoginURL}] ERROR ${e.response!.statusCode} ==> ${e.response!.data}');
+              '[POST - ${ApiConst.postLoginURL}] ERROR ${e.response?.statusCode} ==> ${e.response?.data}');
 
-          return DataUserRes.fromJson(e.response!.data);
+          return DataUserRes.fromJson(e.response?.data);
         } else {
           // ignore: avoid_print
           print(
-              '[POST - ${ApiConst.postLoginURL}] ERROR ${e.response!.statusCode} ==> ${e.response!.data}');
+              '[POST - ${ApiConst.postLoginURL}] ERROR ${e.response?.statusCode} ==> ${e.response?.data}');
 
-          return DataUserRes.fromJson(e.response!.data);
+          return DataUserRes.fromJson(e.response?.data);
         }
       }
     }
