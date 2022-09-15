@@ -6,13 +6,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 Widget customTextButton(
     {required String nama, required void Function() ontap}) {
   return Material(
+    color: Colours.white,
     child: InkWell(
       onTap: ontap,
       splashColor: Colours.grey.withOpacity(0.5),
       child: Row(
         children: [
-          SizedBox(
+          Container(
+            color: Colours.white,
             width: 182.w,
+            height: 21,
             child: Text(
               nama,
               textAlign: TextAlign.end,

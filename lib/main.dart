@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:java_code/constant/core/hive_const.dart';
 import 'package:java_code/modules/features/splash_screen/controller/splash_controller.dart';
 import 'package:java_code/modules/features/splash_screen/view/ui/splash_view.dart';
+import 'package:java_code/modules/global_controllers/check_connection_controller.dart';
 import 'package:java_code/modules/models/user_data_res/akses.dart';
 import 'package:java_code/modules/models/user_data_res/data_user.dart';
 import 'package:java_code/modules/models/user_data_res/user.dart';
@@ -46,6 +47,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(SplashScreenController(), permanent: true);
+    Get.put(ConnectionManagerController(), permanent: true);
+
     return ScreenUtilInit(
       designSize: AppConst.designSize,
       minTextAdapt: true,

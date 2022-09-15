@@ -1,30 +1,56 @@
 // ignore_for_file: avoid_print, invalid_use_of_protected_member
 
+import 'dart:developer';
+
 import 'package:get/get.dart';
+import 'package:java_code/config/routes/app_routes.dart';
+import 'package:java_code/constant/core/api_const.dart';
 import 'package:java_code/modules/features/home/repositories/home_repository.dart';
-import 'package:java_code/modules/models/all_menu_res/all_menu_res.dart';
 import 'package:flutter/material.dart';
-import 'package:java_code/modules/models/all_menu_res/datum.dart';
+import 'package:java_code/modules/models/all_menu_res/data_menu.dart';
+import 'package:java_code/modules/models/all_promo_res/data_promo.dart';
+
+enum Kategori {
+  all,
+  makanan,
+  snack,
+  minuman,
+}
 
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
 
-  /// TEXTEDITING CONTROLLER
-  TextEditingController controllerPencarian = TextEditingController();
+  /// RxString UNTUK STATUS KONDISI DARI GET_ALL_MENU
+  /// DIGUNAKAN UNTUK PENGKONDISIAN PADA VIEW
+  RxString loading = 'loading'.obs;
 
-  ///
-  ///
+  /// RxString UNTUK STATUS KONDISI DARI GET_ALL_PROMO
+  /// DIGUNAKAN UNTUK PENGKONDISIAN PADA VIEW
+  RxString loadingPromo = 'loading'.obs;
+
+  /// TEXTEDITING CONTROLLER UNTUK PENCARIAN
+  Rx<TextEditingController> controllerPencarian = TextEditingController().obs;
+
+  /// MEMANGGIL CLASS HOMEREPOSITORY UNTUK MENGGUNAKAN GET_ALL_MENU
   HomeRepository homeRepository = HomeRepository();
 
   /// RXLIST ALL MENU
-  RxList<Datum> listAllMenu = <Datum>[].obs;
-  RxList<Datum> listMenuMakanan = <Datum>[].obs;
-  RxList<Datum> listMenuMinuman = <Datum>[].obs;
-  RxList<Datum> listMenuSnack = <Datum>[].obs;
+  RxList<DataMenu> listAllMenu = <DataMenu>[].obs;
 
-  Rx<AllMenuRes> allMenuRes = Rx<AllMenuRes>(AllMenuRes());
+  /// RXLIST MENU PESANAN
+  RxList<DataMenu> listMenuInOrder = <DataMenu>[].obs;
 
-  /// LIST TAB MENU
+  /// RXLIST ALL PROMO
+  RxList<DataPromo> listAlLPromo = <DataPromo>[].obs;
+
+  /// MEMBUAT GETTER UNTUK MENDAMPILKAN LIST MENU SESUAI DENGAN KEBUTUHAN
+  RxList<DataMenu> get listMakanan => filteringMenuWithSearch(kategori.value);
+  RxList<DataMenu> get listSnack => filteringMenuWithSearch(kategori.value);
+  RxList<DataMenu> get listMinuman => filteringMenuWithSearch(kategori.value);
+  RxList<DataMenu> get listAllMenuRes =>
+      filteringMenuWithSearch(kategori.value);
+
+  /// LIST PENAMAAN TAB MENU
   RxList tabMenu = [
     'Semua Menu',
     'Makanan',
@@ -34,6 +60,17 @@ class HomeController extends GetxController {
 
   /// TAB INDEX MENU
   RxInt index = 0.obs;
+  RxList<String> tabMenuKategori = [
+    'all',
+    'makanan',
+    'snack',
+    'minuman',
+  ].obs;
+
+  /// KATEGORI UNTUK PENCARIAN
+  RxString kategori = ''.obs;
+
+  RxString searchValue = ''.obs;
 
   /// =============== CHANGE PAGE ===============
   RxInt pageIndex = 0.obs;
@@ -46,313 +83,178 @@ class HomeController extends GetxController {
     await homeRepository.getAllMenu().then((value) {
       // ignore: prefer_is_empty
       if (value.data?.length == 0 || value.data == null) {
+        /// SUKSES NAMUN TIDAK MENDAPATKAN DATA
+        loading.value = 'empty';
         return [];
+      } else if (value.statusCode == 200) {
+        /// SUKSES DAN MENDAPATKAN DATA
+        loading.value = 'sukses';
+        listAllMenu.value = value.data!;
       } else {
-        for (var element in value.data!) {
-          listAllMenu.add(element);
-
-          listAllMenu.refresh();
-        }
-
-        for (var element in value.data!) {
-          listAllMenu.add(element);
-
-          listAllMenu.refresh();
-        }
-        for (var element in value.data!) {
-          listMenuMakanan.addIf(element.kategori == 'makanan', element);
-
-          listMenuMakanan.refresh();
-        }
-        for (var element in value.data!) {
-          listMenuMinuman.addIf(element.kategori == 'minuman', element);
-          listMenuMinuman.refresh();
-        }
-        for (var element in value.data!) {
-          listMenuSnack.addIf(element.kategori == 'snack', element);
-          listMenuSnack.refresh();
-        }
+        loading.value = 'error';
+        print('Debug HomeController ln-68');
+        print('[GET - ${ApiConst.getAllMenuURL}] ERROR ${value.statusCode}');
       }
     });
-    // print('Debug Homecontroller');
-    // print('LIST MENU PERTAMA : ${listAllMenu.value[0]}');
-    // print('LIST MENU Makanan : ${listMenuMakanan.value[0].kategori}');
-    // print('LIST MENU Minuman : ${listMenuMinuman.value[0].kategori}');
-    // print('LIST MENU Snack : ${listMenuSnack.value[0].kategori}');
   }
 
-  /// =============== PENCARI MENU ===============
-  ///
-  // void pencarianMenu(String query) {
-  //   List<Datum> listAll = listAllMenu.value.where((datum) {
-  //     final namaMenu = datum.nama!.toLowerCase();
-  //     final input = query.toLowerCase();
+  /// =============== GET ALL PROMO ===============
+  Future<void> getAllPromo() async {
+    await homeRepository.getAllPromo().then((value) {
+      // ignore: prefer_is_empty
+      if (value.data?.length == 0 || value.data == null) {
+        /// SUKSES NAMUN TIDAK MENDAPATKAN DATA
+        loadingPromo.value = 'empty';
+        return [];
+      } else if (value.statusCode == 200) {
+        /// SUKSES DAN MENDAPATKAN DATA
+        loadingPromo.value = 'sukses';
+        listAlLPromo.value = value.data!;
+      } else {
+        loadingPromo.value = 'error';
+        log('Debug HomeController ln-68');
+        log('[GET - ${ApiConst.getAllPromo}] ERROR ${value.statusCode}');
+      }
+    });
+  }
 
-  //     return namaMenu.contains(input, 0);
-  //   }).toList();
-  //   if (query.isEmpty || query == '') {
-  //     listAllMenu;
-  //     listAllMenu.refresh();
-  //     getAllMenu();
-  //   } else {
-  //     listAllMenu.value = listAll;
-  //     listAllMenu.refresh();
-  //   }
-  // }
+  RxList<DataMenu> filteringMenuWithSearch(String category) {
+    if (category == 'all') {
+      listAllMenu.value.sort(
+        (a, b) {
+          if (a.kategoriWeight - b.kategoriWeight != 0) {
+            return a.kategoriWeight - b.kategoriWeight;
+          }
+          return b.kategoriWeight - a.kategoriWeight;
+        },
+      );
 
-  // void pencarianMenu(String query) {
-  //   // String element = tabMenu.value[0].toString();
-  //   // print(element);
-  //   //listAllMenu[0].kategori
-  //   switch (tabMenu.value.toString()) {
-  //     case 'Semua Menu':
-  //       List<Datum> listAll = listAllMenu.value.where((datum) {
-  //         final namaMenu = datum.nama!.toLowerCase();
-  //         final input = query.toLowerCase();
+      return listAllMenu
+          .where((e) => e.nama!.toLowerCase().contains(searchValue.value))
+          .toList()
+          .obs;
+    }
+    return listAllMenu
+        .where((e) =>
+            e.kategori == category &&
+            e.nama!.toLowerCase().contains(searchValue.value))
+        .toList()
+        .obs;
+  }
 
-  //         return namaMenu.contains(input, 0);
-  //       }).toList();
-  //       if (query.isEmpty || query == '') {
-  //         listAllMenu;
-  //         listAllMenu.refresh();
-  //         getAllMenu();
-  //       } else {
-  //         listAllMenu.value = listAll;
-  //         listAllMenu.refresh();
-  //       }
-  //       break;
-  //     case 'Makanan':
-  //       List<Datum> listMakan = listMenuMakanan.value.where((datum) {
-  //         final namaMenu = datum.nama!.toLowerCase();
+  /// INCREMENT ORDER
+  void incrementOrder({required int idMenu}) {
+    /// JIKA PERTAMA KALI MENAMBAHKAN ORDER , AKAN DI ROUTING KE DETAIL MENU
+    if (getMenuByIdMenu(idMenu: idMenu)[0].count == 0) {
+      Get.toNamed(AppRoutes.detailMenu, arguments: {
+        'id_menu': idMenu, // DIPAKAI DI DETAIL MENU CONTROLLER LANGSUNG
+      });
+    }
 
-  //         return namaMenu.contains(query.toLowerCase(), 0);
-  //       }).toList();
-  //       listMenuMakanan.value = listMakan;
-  //       if (query.isEmpty || query == '') {
-  //         getAllMenu();
-  //         listMenuMakanan;
-  //         listMenuMakanan.refresh();
-  //       } else {
-  //         listMenuMakanan.value = listMakan;
-  //         listMenuMakanan.refresh();
-  //       }
-  //       // listMenuMakanan.refresh();
-  //       break;
-  //     case 'Snack':
-  //       List<Datum> listSnack = listMenuSnack.value.where(
-  //         (datum) {
-  //           final namaMenu = datum.nama!.toLowerCase();
-  //           final input = query.toLowerCase();
+    /// MENGUBAH CURRRENT PADA LISTALLMENU
+    DataMenu current = listAllMenu.where((e) => e.idMenu == idMenu).toList()[0];
+    current.count = current.count! + 1;
 
-  //           return namaMenu.contains(input, 0);
-  //         },
-  //       ).toList();
+    // /// MENAMBAHKAN PADA KERANJANG
+    // // CEK MENU SUDAH ADA DI DALAM KERANJANG LIST
+    // if (listMenuInOrder.isEmpty) {
+    //   // pertama kali menabahkan
+    //   // belum ada menu => menambahkan menu baru
+    //   listMenuInOrder.add(current);
+    //   update();
+    //   log('PERTAMA KALI MENAMBAHKAN : ${listMenuInOrder.length}');
+    // } else if (listMenuInOrder
+    //     .where((e) => e.idMenu == idMenu)
+    //     .toList()
+    //     .isEmpty) {
+    //   // menambahkan menu baru kedalam keranjang yang berbeda dari menu sebelumnya
+    //   update();
+    //   log('CEK BUG');
+    //   listMenuInOrder.add(current);
+    //   log('MENAMBAHKAN MENU LAIN : ${listMenuInOrder.length}');
+    // } else {
+    //   // sudah ada menu , hanya menambahkan jumlah count
+    //   var existMenu =
+    //       listMenuInOrder.where((e) => e.idMenu == idMenu).toList()[0];
+    //   existMenu.count = existMenu.count!;
+    //   update();
+    //   log('${existMenu.nama} - ${existMenu.count} ');
+    //   log('MENAMBAHKAN COUNT SAJA : ${listMenuInOrder.length}');
+    // }
+    // log('LIST PESANAN : ${listMenuInOrder.toJson().toString()}');
+    update();
+  }
 
-  //       if (query.isEmpty || query == '') {
-  //         getAllMenu();
-  //         listMenuSnack;
-  //         listMenuSnack.refresh();
-  //       } else {
-  //         listMenuSnack.value = listSnack;
-  //         listMenuSnack.refresh();
-  //       }
+  /// DECREMENT ORDER
+  void decrementOrder({required int idMenu}) {
+    // if (listAllMenu.where((e) => e.idMenu == idMenu).toList()[0].count != 0) {
+    /// MENGURANGI PADA LIST ALL MENU
+    DataMenu current = listAllMenu.where((e) => e.idMenu == idMenu).toList()[0];
+    current.count = current.count! - 1;
+    // log('DECREMENT NAMA MENU : ${listAllMenu.where((e) => e.idMenu == idMenu).toList()[0].nama}');
+    // log('DECREMENT IDMENU MENU : ${listAllMenu.where((e) => e.idMenu == idMenu).toList()[0].idMenu}');
+    // log('DECREMENT COUNT MENU : ${listAllMenu.where((e) => e.idMenu == idMenu).toList()[0].count}');
 
-  //       break;
-  //     case 'Minuman':
-  //       List<Datum> listMinuman = listMenuMinuman.value.where((datum) {
-  //         final namaMenu = datum.nama!.toLowerCase();
-  //         final input = query.toLowerCase();
+    // /// MENGURANGI PADA KERANGJANG
+    // /// PASTI ADA MINIMAL 1 MENU
+    // List<DataMenu> axistMenu =
+    //     listMenuInOrder.where((e) => e.idMenu == idMenu).toList();
 
-  //         return namaMenu.contains(input, 0);
-  //       }).toList();
-  //       listMenuMinuman.value = listMinuman;
-  //       if (query.isEmail || query == '') {
-  //         getAllMenu();
-  //         listMenuMinuman;
-  //         listMenuMinuman.refresh();
-  //       } else {
-  //         listMenuMinuman.value = listMinuman;
-  //         listMenuMinuman.refresh();
-  //       }
+    // if (axistMenu[0].count == 1) {
+    //   // JIKA YANG MAU DI HAPUS MEMILIKI AXIST COUNT HANYA 1
+    //   log("JIKA YANG MAU DI HAPUS MEMILIKI AXIST COUNT HANYA 1");
 
-  //       break;
+    //   // DI HAPUS DARI LIST
+    //   listMenuInOrder.remove(axistMenu[0]);
+    // } else {
+    //   // BERARTI AXIST MENU MEMILIKI COUNT LEBIH DARI 1
+    //   axistMenu[0].count = axistMenu[0].count!;
+    // }
 
-  //     default:
-  //   }
-  // }
+    // log('LIST PESANAN ${listMenuInOrder.toJson()}');
+    update();
+    // }
+  }
 
-  // void pencarianMenu(String query, int index) {
-  //   switch (index) {
-  //     case 0:
-  //       print('object 0');
-  //       List<Datum> listAll = listAllMenu.value.where((datum) {
-  //         final namaMenu = datum.nama!.toLowerCase();
-  //         final input = query.toLowerCase();
+  RxList<DataMenu> getMenuByIdMenu({required int idMenu}) {
+    return listAllMenu.where((e) => e.idMenu == idMenu).toList().obs;
+  }
 
-  //         return namaMenu.contains(input, 0);
-  //       }).toList();
-  //       if (query.isEmpty || query == '') {
-  //         listAll.clear();
-  //         getAllMenu();
-  //         listAllMenu;
-  //         listAllMenu.refresh();
-  //       } else {
-  //         listAllMenu.value = listAll;
-  //         listAllMenu.refresh();
-  //       }
-  //       break;
-  //     case 1:
-  //       print('object 1');
-  //       List<Datum> listMakan = listMenuMakanan.value.where((datum) {
-  //         final namaMenu = datum.nama!.toLowerCase();
+  /// MEMASUKAN PESANAN KEDALAM KERANJANG
+  RxList<DataMenu> menuBucket = <DataMenu>[].obs;
+  void insetMenuToBucketMenu({required int idMenu}) {
+    if (getMenuByIdMenu(idMenu: idMenu)[0].count != 0) {
+      var data =
+          HomeController.to.listAllMenu.where((e) => e.count != 0).toList();
+      log('BUCKET LENGHT : ${data.length}');
+      // HomeController.to.listAllMenu.where((e) => e.count != 0).toList();
+      menuBucket.value.addAll(
+          HomeController.to.listAllMenu.where((e) => e.count != 0).toList());
+      log('DETAIL MENU CONTROLLER');
+      log('BUCKET LENGHT : ${menuBucket.length}');
+      log('BUCKET LENGHT : ${listAllMenu.length}');
+      log('BUCKET CONTAINS : ${menuBucket[0].nama} -  ${menuBucket[0].count}');
 
-  //         return namaMenu.contains(query.toLowerCase(), 0);
-  //       }).toList();
-  //       listMenuMakanan.value = listMakan;
-  //       if (query.isEmpty || query == '') {
-  //         listMakan.clear();
-  //         getAllMenu();
-  //         listMenuMakanan;
-  //         listMenuMakanan.refresh();
-  //       } else {
-  //         listMenuMakanan.value = listMakan;
-  //         listMenuMakanan.refresh();
-  //       }
-  //       // listMenuMakanan.refresh();
-  //       break;
-  //     case 2:
-  //       print('object 2');
-  //       List<Datum> listSnack = listMenuSnack.value.where(
-  //         (datum) {
-  //           final namaMenu = datum.nama!.toLowerCase();
-  //           final input = query.toLowerCase();
-
-  //           return namaMenu.contains(input, 0);
-  //         },
-  //       ).toList();
-
-  //       if (query.isEmpty || query == '') {
-  //         listSnack.clear();
-  //         getAllMenu();
-  //         listMenuSnack;
-  //         listMenuSnack.refresh();
-  //       } else {
-  //         listMenuSnack.value = listSnack;
-  //         listMenuSnack.refresh();
-  //       }
-  //       break;
-  //     case 3:
-  //       print('object 3');
-  //       List<Datum> listMinuman = listMenuMinuman.value.where((datum) {
-  //         final namaMenu = datum.nama!.toLowerCase();
-  //         final input = query.toLowerCase();
-
-  //         return namaMenu.contains(input, 0);
-  //       }).toList();
-  //       listMenuMinuman.value = listMinuman;
-  //       if (query.isEmail || query == '') {
-  //         listMinuman.clear();
-  //         getAllMenu();
-  //         listMenuMinuman;
-  //         listMenuMinuman.refresh();
-  //       } else {
-  //         listMenuMinuman.value = listMinuman;
-  //         listMenuMinuman.refresh();
-  //       }
-
-  //       break;
-
-  //     default:
-  //   }
-  // }
-  void pencarianMenu(String query, int index) {
-    switch (index) {
-      case 0:
-        print('object 0');
-        List<Datum> listAll = listAllMenu.value.where((datum) {
-          final namaMenu = datum.nama!.toLowerCase();
-          final input = query.toLowerCase();
-
-          return namaMenu.contains(input, 0);
-        }).toList();
-        if (query.isEmpty || query == '') {
-          listAllMenu.clear();
-          getAllMenu();
-          listAllMenu;
-          listAllMenu.refresh();
-        } else {
-          listAllMenu.value = listAll;
-          listAllMenu.refresh();
-        }
-        break;
-      case 1:
-        print('object 1');
-        List<Datum> listMakan = listMenuMakanan.value.where((datum) {
-          final namaMenu = datum.nama!.toLowerCase();
-
-          return namaMenu.contains(query.toLowerCase(), 0);
-        }).toList();
-        listMenuMakanan.value = listMakan;
-        if (query.isEmpty || query == '') {
-          listMenuMakanan.clear();
-          getAllMenu();
-          listMenuMakanan;
-          listMenuMakanan.refresh();
-        } else {
-          listMenuMakanan.value = listMakan;
-          listMenuMakanan.refresh();
-        }
-        // listMenuMakanan.refresh();
-        break;
-      case 2:
-        print('object 2');
-        List<Datum> listSnack = listMenuSnack.value.where(
-          (datum) {
-            final namaMenu = datum.nama!.toLowerCase();
-            final input = query.toLowerCase();
-
-            return namaMenu.contains(input, 0);
-          },
-        ).toList();
-
-        if (query.isEmpty || query == '') {
-          listMenuSnack.clear();
-          getAllMenu();
-          listMenuSnack;
-          listMenuSnack.refresh();
-        } else {
-          listMenuSnack.value = listSnack;
-          listMenuSnack.refresh();
-        }
-        break;
-      case 3:
-        print('object 3');
-        List<Datum> listMinuman = listMenuMinuman.value.where((datum) {
-          final namaMenu = datum.nama!.toLowerCase();
-          final input = query.toLowerCase();
-
-          return namaMenu.contains(input, 0);
-        }).toList();
-        listMenuMinuman.value = listMinuman;
-        if (query.isEmail || query == '') {
-          listMenuMinuman.clear();
-          getAllMenu();
-          listMenuMinuman;
-          listMenuMinuman.refresh();
-        } else {
-          listMenuMinuman.value = listMinuman;
-          listMenuMinuman.refresh();
-        }
-
-        break;
-
-      default:
+      Get.toNamed(AppRoutes.pesanan);
     }
   }
 
   @override
   void onInit() async {
+    /// MENGAMBIL ALL DATA MENU
     await getAllMenu();
+
+    /// MENGAMBIL ALL DATA PROMO
+    await getAllPromo();
+
+    filteringMenuWithSearch(kategori.value);
+    listMakanan;
+    listMinuman;
+    listSnack;
+    listAllMenuRes;
+
+    /// KATEGORI AWAL KETIKA STARTING MENU
+    kategori.value = tabMenuKategori[0];
 
     super.onInit();
   }

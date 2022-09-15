@@ -9,7 +9,7 @@ part of 'all_menu_res.dart';
 AllMenuRes _$AllMenuResFromJson(Map<String, dynamic> json) => AllMenuRes(
       statusCode: json['status_code'] as int?,
       data: (json['data'] as List<dynamic>?)
-          ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => DataMenu.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

@@ -1,6 +1,4 @@
 // ignore_for_file: avoid_print
-import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:get/get.dart';
 import 'package:java_code/constant/core/hive_const.dart';
 

@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,12 +46,11 @@ class LoginController extends GetxController {
   Future<void> postLogin() async {
     /// CEK EMAIL DAN PASSWORD TIDAK BOLEH KOSONG
     if (emailLoginC.text.isNotEmpty && passLoginC.text.isNotEmpty) {
-      //////////////////
       try {
         isLoading.value = true;
-        isLoading.value = true;
-        print('DEBUG LOGIN CONTROLLER');
-        print('proses post data');
+
+        log('DEBUG LOGIN CONTROLLER');
+        log('proses post data');
         final result = await repository.loginWithEndpoint(
             email: emailLoginC.text, password: passLoginC.text);
 
@@ -59,11 +60,11 @@ class LoginController extends GetxController {
               HiveConst.aksesHiveKey, result.data!.user!.akses);
           HiveServices.putToken(HiveConst.dataUserTokenHiveKey, result.data!);
           HiveServices.putUserData(HiveConst.aksesHiveKey, result.data!.user);
-          print('DEBUG LOGIN CONTROLLER');
-          print(
-              'Token user login : ${DataUserManager.getAllNotes().toMap()[HiveConst.dataUserTokenHiveKey]!.token}');
+          log('DEBUG LOGIN CONTROLLER');
+          log('Token user login : ${DataUserManager.getAllNotes().toMap()[HiveConst.dataUserTokenHiveKey]!.token}');
           Get.offAllNamed(AppRoutes.loadingLokasi);
         } else if (result.statusCode == 505 || result.statusCode == 500) {
+          isLoading.value = false;
           Get.snackbar(
             'Connection Timeout',
             'We can\'t connect to the server. Please check your internet connection',
@@ -73,15 +74,16 @@ class LoginController extends GetxController {
             colorText: Colors.white,
           );
         }
+        isLoading.value = false;
         Get.snackbar(
-          "Berhasil",
-          "Kamu berhasil login",
+          "Terjadi Kesalahan",
+          "Tidak dapat login",
           backgroundColor: Colours.green2,
           overlayBlur: 1,
           duration: const Duration(seconds: 1),
         );
       } catch (e) {
-        print(e.toString());
+        log(e.toString());
         Get.snackbar(
           "Terjadi Kesalahan",
           "Tidak dapat login",
@@ -93,6 +95,7 @@ class LoginController extends GetxController {
         isLoading.value = false;
       }
     } else {
+      isLoading.value = false;
       Get.snackbar(
         "Terjadi Kesalahan",
         "Semua Form Harus Diisi",
@@ -105,16 +108,13 @@ class LoginController extends GetxController {
 
   ///
 
-  Future<void> authLogin() {
-    return repository.authLogin();
-  }
+  Future<void> googleAuthLogin() async {
+    UserCredential? result = await repository.authLoginGoogle();
 
-  Future<bool> autoLogin() {
-    return repository.autoLogin();
-  }
-
-  Future<void> firstInitialized() {
-    return repository.firstInitialized();
+    await repository.loginWithGoogleEndpoint(
+      email: result!.user!.email!,
+      nama: result.user!.displayName!,
+    );
   }
 
   /// LOGIN FIREBASE

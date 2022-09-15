@@ -24,6 +24,8 @@ class AssetConts {
       'assets/images/draw_detailMenuKatsu.png';
   static const String drawVoucher = 'assets/images/draw_voucher.png';
   static const String drawEmptyProfile = 'assets/images/draw_emptyprofile.png';
+  static const String drawBgDiskon = 'assets/images/draw_bg_diskon.png';
+  static const String drawBgNotification = 'assets/images/draw_bg-notif.png';
 
   /// bg
   static const String backgroundLoadingLokasi =
@@ -68,7 +70,13 @@ class AssetConts {
   static const String iconEngFlag = 'assets/images/ic_engFlag.png';
   static const String iconEmptyMenu = 'assets/images/ic_empty_menu.jpeg';
   static const String iconHapusItem = 'assets/images/ic_empty_menu.jpeg';
+  static const String iconBgNotif = 'assets/images/ic_bg_notif.png';
+  static const String iconNotification = 'assets/images/ic_notif.png';
 
   /// LOTTIE
-  static const String lotSpalshSreen = 'assets/images/ic_hapus_item.png';
+  static const String lottieEmptyState = 'assets/lottie/lottie_empty.json';
+  static const String lottieErrorState = 'assets/lottie/lottie_error.json';
+
+  /// GIF
+  static const String gifLoadingImage = 'assets/gif/gif_loading_image.gif';
 }

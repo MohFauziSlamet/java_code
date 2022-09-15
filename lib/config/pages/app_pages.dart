@@ -8,6 +8,7 @@ import 'package:java_code/modules/features/home/view/ui/home_view.dart';
 import 'package:java_code/modules/features/loading_lokasi/view/ui/loading_lokasi_view.dart';
 import 'package:java_code/modules/features/login/view/ui/login_view.dart';
 import 'package:java_code/modules/features/login/view/ui/register_view.dart';
+import 'package:java_code/modules/features/no_connecntion/view/ui/no_connection_view.dart';
 import 'package:java_code/modules/features/pesanan/view/ui/pesanan_view.dart';
 import 'package:java_code/modules/features/pilih_voucher/view/ui/pilih_voucher_view.dart';
 import 'package:java_code/modules/features/profile/view/ui/profile_view.dart';
@@ -65,6 +66,10 @@ class AppPages {
       GetPage(
         name: AppRoutes.spalshScreen,
         page: () => const SplashScreen(),
+      ),
+      GetPage(
+        name: AppRoutes.noConnection,
+        page: () => const NoConnectionView(),
       ),
     ];
   }

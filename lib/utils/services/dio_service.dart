@@ -8,7 +8,7 @@ class DioService {
   DioService._();
 
   //* Methods (Function)
-  static Dio dioCall({int connectTimeout = 20000}) {
+  static Dio dioCall({int connectTimeout = 200000}) {
     // Variables
     // 'Token user login : ${DataUserManager.getAllNotes().toMap()[HiveConst.dataUserTokenHiveKey]!.token}'
     late Map<String, dynamic> header;

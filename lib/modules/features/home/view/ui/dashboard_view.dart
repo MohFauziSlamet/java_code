@@ -6,7 +6,9 @@ import 'package:java_code/constant/core/assets_const.dart';
 import 'package:java_code/modules/features/checkout/view/ui/checkout_view.dart';
 import 'package:java_code/modules/features/home/controllers/home_controller.dart';
 import 'package:java_code/modules/features/home/view/ui/home_view.dart';
+import 'package:java_code/modules/features/no_connecntion/view/ui/no_connection_view.dart';
 import 'package:java_code/modules/features/profile/view/ui/profile_view.dart';
+import 'package:java_code/modules/global_controllers/check_connection_controller.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -20,14 +22,16 @@ class DashboardView extends StatelessWidget {
     RxInt index = HomeController.to.pageIndex;
     return Scaffold(
       body: Obx(
-        () => IndexedStack(
-          index: HomeController.to.pageIndex.value,
-          children: const [
-            HomeView(),
-            CheckoutView(),
-            ProfileView(),
-          ],
-        ),
+        () => ConnectionManagerController.to.connectionType.value != 0
+            ? IndexedStack(
+                index: HomeController.to.pageIndex.value,
+                children: const [
+                  HomeView(),
+                  CheckoutView(),
+                  ProfileView(),
+                ],
+              )
+            : const NoConnectionView(),
       ),
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.only(

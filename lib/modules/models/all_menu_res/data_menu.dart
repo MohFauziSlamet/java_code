@@ -1,8 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'datum.g.dart';
+
+part 'data_menu.g.dart';
 
 @JsonSerializable()
-class Datum {
+class DataMenu {
   @JsonKey(name: 'id_menu')
   int? idMenu;
   String? nama;
@@ -12,10 +13,8 @@ class Datum {
   String? foto;
   int? status;
   int? count;
-  // @JsonKey(count: '0')
-  // RxInt count = 0.obs;
 
-  Datum({
+  DataMenu({
     this.idMenu,
     this.nama,
     this.kategori,
@@ -26,7 +25,21 @@ class Datum {
     this.count = 0,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
+  factory DataMenu.fromJson(Map<String, dynamic> json) =>
+      _$DataMenuFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DatumToJson(this);
+  Map<String, dynamic> toJson() => _$DataMenuToJson(this);
+
+  int get kategoriWeight {
+    switch (kategori) {
+      case 'makanan':
+        return 1;
+
+      case 'snack':
+        return 2;
+
+      default:
+        return 3;
+    }
+  }
 }

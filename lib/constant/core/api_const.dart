@@ -3,7 +3,7 @@ class ApiConst {
 
   /// JAVA CODE BASE URL
   /// https://trainee.landa.id/javacode/
-  static const String baseURL = 'https://trainee.landa.id/javacode/';
+  static const String baseURL = 'http://trainee.landa.id/javacode/';
   static const String defaultToken = '5a714638b0c506c31845e3163089f6a0ed376b0e';
 
   /// POST LOGIN
@@ -15,4 +15,7 @@ class ApiConst {
   static const String getMenuMinumanURL = 'menu/kategori/minuman';
   static const String getMenuSnackURL = 'menu/kategori/snack';
   static const String detailMenuURL = 'menu/detail/';
+  static const String getAllPromo = 'promo/all';
+  static const String getDetailPromo = 'promo/detail/';
+  static const String postLoginWithGoogle = 'auth/login';
 }
