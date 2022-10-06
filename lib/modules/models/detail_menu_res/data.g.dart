@@ -10,7 +10,9 @@ Data _$DataFromJson(Map<String, dynamic> json) => Data(
       menu: json['menu'] == null
           ? null
           : Menu.fromJson(json['menu'] as Map<String, dynamic>),
-      topping: json['topping'] as List<dynamic>?,
+      topping: (json['topping'] as List<dynamic>?)
+          ?.map((e) => Level.fromJson(e as Map<String, dynamic>))
+          .toList(),
       level: (json['level'] as List<dynamic>?)
           ?.map((e) => Level.fromJson(e as Map<String, dynamic>))
           .toList(),

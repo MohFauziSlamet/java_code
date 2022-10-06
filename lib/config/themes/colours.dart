@@ -16,7 +16,7 @@ class Colours {
   static const Color textYellow = Color(0xFFFFAC01);
   static const Color textGreen = Color(0xFF009C48);
 
-  static const Color bgColors = Color(0xffE5E5E5);
+  static const Color bgColors = Color(0xffFFFFFF);
 
   static const LinearGradient gradientGreen = LinearGradient(
     begin: Alignment.topLeft,

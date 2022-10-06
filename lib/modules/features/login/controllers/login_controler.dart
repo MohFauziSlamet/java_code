@@ -62,6 +62,7 @@ class LoginController extends GetxController {
           HiveServices.putUserData(HiveConst.aksesHiveKey, result.data!.user);
           log('DEBUG LOGIN CONTROLLER');
           log('Token user login : ${DataUserManager.getAllNotes().toMap()[HiveConst.dataUserTokenHiveKey]!.token}');
+          log('ID user login : ${DataUserManager.getAllNotes().toMap()[HiveConst.dataUserTokenHiveKey]!.user!.idUser}');
           Get.offAllNamed(AppRoutes.loadingLokasi);
         } else if (result.statusCode == 505 || result.statusCode == 500) {
           isLoading.value = false;
@@ -75,13 +76,13 @@ class LoginController extends GetxController {
           );
         }
         isLoading.value = false;
-        Get.snackbar(
-          "Terjadi Kesalahan",
-          "Tidak dapat login",
-          backgroundColor: Colours.green2,
-          overlayBlur: 1,
-          duration: const Duration(seconds: 1),
-        );
+        // Get.snackbar(
+        //   "Terjadi Kesalahan",
+        //   "Tidak dapat login",
+        //   backgroundColor: Colours.green2,
+        //   overlayBlur: 1,
+        //   duration: const Duration(seconds: 1),
+        // );
       } catch (e) {
         log(e.toString());
         Get.snackbar(

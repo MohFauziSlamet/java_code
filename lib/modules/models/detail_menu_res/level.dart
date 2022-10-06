@@ -11,14 +11,15 @@ class Level {
   String? keterangan;
   String? type;
   int? harga;
+  bool? isSelected;
 
-  Level({
-    this.idDetail,
-    this.idMenu,
-    this.keterangan,
-    this.type,
-    this.harga,
-  });
+  Level(
+      {this.idDetail,
+      this.idMenu,
+      this.keterangan,
+      this.type,
+      this.harga,
+      this.isSelected = false});
 
   factory Level.fromJson(Map<String, dynamic> json) => _$LevelFromJson(json);
 

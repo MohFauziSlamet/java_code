@@ -12,6 +12,7 @@ Level _$LevelFromJson(Map<String, dynamic> json) => Level(
       keterangan: json['keterangan'] as String?,
       type: json['type'] as String?,
       harga: json['harga'] as int?,
+      isSelected: json['isSelected'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$LevelToJson(Level instance) => <String, dynamic>{
@@ -20,4 +21,5 @@ Map<String, dynamic> _$LevelToJson(Level instance) => <String, dynamic>{
       'keterangan': instance.keterangan,
       'type': instance.type,
       'harga': instance.harga,
+      'isSelected': instance.isSelected,
     };

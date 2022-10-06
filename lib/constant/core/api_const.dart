@@ -18,4 +18,13 @@ class ApiConst {
   static const String getAllPromo = 'promo/all';
   static const String getDetailPromo = 'promo/detail/';
   static const String postLoginWithGoogle = 'auth/login';
+  static const String postOrderMenu = 'order/add';
+  static const String getDiskonByIdUser = 'diskon/user/';
+  static const String getVoucheByIdUser = 'voucher/user/';
+  static const String getDetailOrderByIdStruk = 'order/detail/';
+  static const String getOrderByIdUser = 'order/user/';
+  static const String postOrderByIdUser = 'order/history/';
+  static const String getUserDetail = 'user/detail/';
+  static const String postUpdateProfile = "user/profil/";
+  static const String postUpdateUser = "user/update/";
 }

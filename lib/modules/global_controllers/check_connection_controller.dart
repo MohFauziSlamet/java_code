@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
@@ -29,7 +30,7 @@ class ConnectionManagerController extends GetxController {
       connectivityResult = await (_connectivity.checkConnectivity());
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print(e);
+        log(e.toString());
       }
     }
 

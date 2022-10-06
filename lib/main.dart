@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:java_code/config/localizations/locale_string.dart';
 import 'package:java_code/config/pages/app_pages.dart';
 import 'package:java_code/config/routes/app_routes.dart';
 import 'package:java_code/constant/commons/app_const.dart';
@@ -11,6 +12,9 @@ import 'package:java_code/constant/core/hive_const.dart';
 import 'package:java_code/modules/features/splash_screen/controller/splash_controller.dart';
 import 'package:java_code/modules/features/splash_screen/view/ui/splash_view.dart';
 import 'package:java_code/modules/global_controllers/check_connection_controller.dart';
+import 'package:java_code/modules/models/hive/menu_hive_model.dart';
+import 'package:java_code/modules/models/hive/order_hive_model.dart';
+import 'package:java_code/modules/models/hive/topping_hive_model.dart';
 import 'package:java_code/modules/models/user_data_res/akses.dart';
 import 'package:java_code/modules/models/user_data_res/data_user.dart';
 import 'package:java_code/modules/models/user_data_res/user.dart';
@@ -32,22 +36,33 @@ void main() async {
   Hive.registerAdapter(AksesAdapter());
   Hive.registerAdapter(DataUserAdapter());
   Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(MenuHiveAdapter());
+  Hive.registerAdapter(OrderHiveAdapter());
+  Hive.registerAdapter(ToppingHiveAdapter());
 
   /// OPEN BOX
   await Hive.openBox<Akses>(HiveConst.aksesHiveBox);
   await Hive.openBox<DataUser>(HiveConst.dataUserTokenHiveBox);
   await Hive.openBox<User>(HiveConst.userHiveBox);
-  runApp(const MyApp());
+  await Hive.openBox<OrderHive>(HiveConst.orderHiveBox);
+  await Hive.openBox<MenuHive>(HiveConst.menuHiveBox);
+  await Hive.openBox<ToppingHive>(HiveConst.topingHiveBox);
+  await Hive.openBox(HiveConst.languageHiveBox);
+  runApp(MyApp());
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+  var languageBox = Hive.box(HiveConst.languageHiveBox);
+  String? selectedLanguage;
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     Get.put(SplashScreenController(), permanent: true);
     Get.put(ConnectionManagerController(), permanent: true);
+    selectedLanguage = languageBox.get("country_id");
 
     return ScreenUtilInit(
       designSize: AppConst.designSize,
@@ -61,10 +76,11 @@ class MyApp extends StatelessWidget {
                 return Obx(
                   () => GetMaterialApp(
                     debugShowCheckedModeBanner: false,
+                    locale: selectedLanguage != null ? Locale(selectedLanguage!) : Get.deviceLocale,
+                    translations: LocaleString(),
+                    fallbackLocale: const Locale('en', 'US'),
                     title: AppConst.appName,
-                    initialRoute: SplashScreenController.to.isAuth.isTrue
-                        ? AppRoutes.dashboardView
-                        : AppRoutes.login,
+                    initialRoute: SplashScreenController.to.isAuth.isTrue ? AppRoutes.dashboardView : AppRoutes.login,
                     getPages: AppPages.getPage(),
                   ),
                 );
@@ -80,3 +96,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+// 1.250.000
+// bni 6060605253 an kemahasiswaan asis

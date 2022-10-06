@@ -14,4 +14,6 @@ class AppRoutes {
   static const String registerView = '/registerView';
   static const String spalshScreen = '/splashScreen';
   static const String noConnection = '/noConnection';
+  static const String itemDetailPesanan = '/itemDetailPesanan';
+  static const String pesananTrackingView = '/pesananTrackingView';
 }

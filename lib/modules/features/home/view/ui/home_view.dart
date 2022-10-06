@@ -1,7 +1,4 @@
-// ignore_for_file: invalid_use_of_protected_member
-
-import 'dart:developer';
-
+// ignore_for_file: invalid_use_of_protected_member, prefer_is_empty
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:java_code/config/routes/app_routes.dart';
-import 'package:java_code/modules/features/detail_menu/controller/detail_menu_controller.dart';
 import 'package:java_code/modules/features/home/view/components/image_diskon.dart';
 import 'package:java_code/modules/features/home/view/components/item_menu.dart';
 import 'package:java_code/modules/features/home/view/components/judul_menu.dart';
@@ -29,8 +25,8 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(HomeController());
-    final Debouncer debounce =
-        Debouncer(delay: const Duration(milliseconds: 1000));
+
+    final Debouncer debounce = Debouncer(delay: const Duration(milliseconds: 1000));
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus!.unfocus(),
@@ -39,8 +35,7 @@ class HomeView extends StatelessWidget {
         body: Obx(
           () => Conditional.single(
             context: context,
-            conditionBuilder: (context) =>
-                HomeController.to.loading.value == 'loading',
+            conditionBuilder: (context) => HomeController.to.loading.value == 'loading',
             widgetBuilder: (context) => const LoadingStateView(),
             fallbackBuilder: (context) => SafeArea(
               child: ListView(
@@ -63,25 +58,22 @@ class HomeView extends StatelessWidget {
                         ),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 25.sp, vertical: 11.sp),
+                        padding: EdgeInsets.symmetric(horizontal: 25.sp, vertical: 11.sp),
                         child: TextField(
-                          controller:
-                              HomeController.to.controllerPencarian.value,
+                          controller: HomeController.to.controllerPencarian.value,
                           onChanged: (value) {
                             debounce(() {
                               HomeController.to.searchValue.value = value;
                             });
                           },
                           decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.symmetric(vertical: 12.sp),
+                            contentPadding: EdgeInsets.symmetric(vertical: 12.sp),
                             prefixIcon: SizedBox(
                               width: 26.h,
                               height: 26.h,
                               child: Image.asset(AssetConts.iconPencarian),
                             ),
-                            hintText: "Pencarian",
+                            hintText: "search".tr,
                             hintStyle: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w600,
                               fontSize: 18.sp,
@@ -89,8 +81,7 @@ class HomeView extends StatelessWidget {
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.sp),
-                              borderSide:
-                                  const BorderSide(color: Colours.green2),
+                              borderSide: const BorderSide(color: Colours.green2),
                             ),
                           ),
                         ),
@@ -109,7 +100,7 @@ class HomeView extends StatelessWidget {
                         Image.asset(AssetConts.iconPromo),
                         SizedBox(width: 9.w),
                         Text(
-                          "Promo yang Tersedia",
+                          "available_promo".tr,
                           style: GoogleFonts.montserrat(
                             color: Colours.darkGrey,
                             fontWeight: FontWeight.w700,
@@ -124,8 +115,7 @@ class HomeView extends StatelessWidget {
                   /// LOGO PROMO
                   Obx(() => ConditionalSwitch.single(
                         context: context,
-                        valueBuilder: (context) =>
-                            HomeController.to.loadingPromo.value,
+                        valueBuilder: (context) => HomeController.to.loadingPromo.value,
                         caseBuilders: {
                           'empty': (context) => const EmptyStatePromoView(),
                           'error': (context) => const ErrorStatePromoView(),
@@ -140,17 +130,14 @@ class HomeView extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return ConditionalSwitch.single(
                                   context: context,
-                                  valueBuilder: (context) => HomeController
-                                      .to.listAlLPromo[index].type,
+                                  valueBuilder: (context) => HomeController.to.listAlLPromo[index].type,
                                   caseBuilders: {
                                     'voucher': (context) => ImagePromo(
-                                          resultPromo: HomeController
-                                              .to.listAlLPromo[index],
+                                          resultPromo: HomeController.to.listAlLPromo[index],
                                         ),
                                   },
                                   fallbackBuilder: (context) => ImageDiskon(
-                                    resultPromo:
-                                        HomeController.to.listAlLPromo[index],
+                                    resultPromo: HomeController.to.listAlLPromo[index],
                                   ),
                                 );
                               },
@@ -175,23 +162,19 @@ class HomeView extends StatelessWidget {
                             onTap: () {
                               HomeController.to.index.value = index;
                               // MEMASUKAN KATEGORI UNTUK PENCARIAN YANG AKTIF
-                              HomeController.to.kategori.value = HomeController
-                                  .to.tabMenuKategori.value[index];
-                              log('TAB : ');
-                              log(HomeController
-                                  .to.tabMenuKategori.value[index]);
-                              log('kategori di controller: ');
-                              log(HomeController.to.kategori.value);
+                              HomeController.to.kategori.value = HomeController.to.tabMenuKategori.value[index];
+                              // log('TAB : ');
+                              // log(HomeController
+                              //     .to.tabMenuKategori.value[index]);
+                              // log('kategori di controller: ');
+                              // log(HomeController.to.kategori.value);
                             },
                             child: Container(
                               height: 35,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 5.sp, horizontal: 14.sp),
+                              padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 14.sp),
                               margin: const EdgeInsets.only(right: 13),
                               decoration: BoxDecoration(
-                                color: HomeController.to.index.value == index
-                                    ? Colours.darkGrey
-                                    : Colours.green2,
+                                color: HomeController.to.index.value == index ? Colours.darkGrey : Colours.green2,
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               child: Row(
@@ -200,15 +183,11 @@ class HomeView extends StatelessWidget {
                                     context: context,
                                     valueBuilder: (context) => index,
                                     caseBuilders: {
-                                      0: (context) =>
-                                          Image.asset(AssetConts.iconSemuaMenu),
-                                      1: (context) =>
-                                          Image.asset(AssetConts.iconMakanan),
-                                      2: (context) =>
-                                          Image.asset(AssetConts.iconMakanan),
+                                      0: (context) => Image.asset(AssetConts.iconSemuaMenu),
+                                      1: (context) => Image.asset(AssetConts.iconMakanan),
+                                      2: (context) => Image.asset(AssetConts.iconMakanan),
                                     },
-                                    fallbackBuilder: (context) =>
-                                        Image.asset(AssetConts.iconMinuman),
+                                    fallbackBuilder: (context) => Image.asset(AssetConts.iconMinuman),
                                   ),
                                   SizedBox(
                                     width: 10.w,
@@ -241,8 +220,7 @@ class HomeView extends StatelessWidget {
                     fallbackBuilder: (context) => Container(
                       // LIST MENU
                       //  TAMPILAN SUKSES GET ALL MENU
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 25.sp, vertical: 11.sp),
+                      margin: EdgeInsets.symmetric(horizontal: 25.sp, vertical: 11.sp),
                       child: Column(
                         children: ConditionalSwitch.list(
                           context: context,
@@ -263,28 +241,14 @@ class HomeView extends StatelessWidget {
                                   Obx(
                                     () => Column(
                                       children: [
-                                        JudulMenu(
-                                            iconMenu: AssetConts.iconMakanan,
-                                            judulMenu: 'Makanan'),
+                                        JudulMenu(iconMenu: AssetConts.iconMakanan, judulMenu: 'food'.tr),
                                         ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
+                                          physics: const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
-                                          itemCount: HomeController
-                                              .to.listAllMenuRes
-                                              .where((e) =>
-                                                  e.kategori == 'makanan')
-                                              .toList()
-                                              .length,
+                                          itemCount: HomeController.to.listAllMenuRes.where((e) => e.kategori == 'makanan').toList().length,
                                           itemBuilder: (context, index) {
-                                            log(' PANJANG MAKANAN : ${HomeController.to.listAllMenuRes.where((e) => e.kategori == 'makanan').toList().length}');
-                                            return ItemMenu(
-                                                result: HomeController
-                                                    .to.listAllMenuRes
-                                                    .where((e) =>
-                                                        e.kategori == 'makanan')
-                                                    .toList()[index],
-                                                index: index);
+                                            // log(' PANJANG MAKANAN : ${HomeController.to.listAllMenuRes.where((e) => e.kategori == 'makanan').toList().length}');
+                                            return ItemMenu(result: HomeController.to.listAllMenuRes.where((e) => e.kategori == 'makanan').toList()[index], index: index);
                                           },
                                         ),
                                       ],
@@ -293,28 +257,14 @@ class HomeView extends StatelessWidget {
                                   Obx(
                                     () => Column(
                                       children: [
-                                        JudulMenu(
-                                            iconMenu: AssetConts.iconMakanan,
-                                            judulMenu: 'Snack'),
+                                        JudulMenu(iconMenu: AssetConts.iconMakanan, judulMenu: 'snack'.tr),
                                         ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
+                                          physics: const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
-                                          itemCount: HomeController
-                                              .to.listAllMenuRes
-                                              .where(
-                                                  (e) => e.kategori == 'snack')
-                                              .toList()
-                                              .length,
+                                          itemCount: HomeController.to.listAllMenuRes.where((e) => e.kategori == 'snack').toList().length,
                                           itemBuilder: (context, index) {
-                                            log(' PANJANG SNACK : ${HomeController.to.listAllMenuRes.where((e) => e.kategori == 'snack').toList().length}');
-                                            return ItemMenu(
-                                                result: HomeController
-                                                    .to.listAllMenuRes
-                                                    .where((e) =>
-                                                        e.kategori == 'snack')
-                                                    .toList()[index],
-                                                index: index);
+                                            // log(' PANJANG SNACK : ${HomeController.to.listAllMenuRes.where((e) => e.kategori == 'snack').toList().length}');
+                                            return ItemMenu(result: HomeController.to.listAllMenuRes.where((e) => e.kategori == 'snack').toList()[index], index: index);
                                           },
                                         ),
                                       ],
@@ -323,28 +273,14 @@ class HomeView extends StatelessWidget {
                                   Obx(
                                     () => Column(
                                       children: [
-                                        JudulMenu(
-                                            iconMenu: AssetConts.iconMakanan,
-                                            judulMenu: 'Minuman'),
+                                        JudulMenu(iconMenu: AssetConts.iconMakanan, judulMenu: 'beverage'.tr),
                                         ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
+                                          physics: const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
-                                          itemCount: HomeController
-                                              .to.listAllMenuRes
-                                              .where((e) =>
-                                                  e.kategori == 'minuman')
-                                              .toList()
-                                              .length,
+                                          itemCount: HomeController.to.listAllMenuRes.where((e) => e.kategori == 'minuman').toList().length,
                                           itemBuilder: (context, index) {
-                                            log(' PANJANG Minuman : ${HomeController.to.listAllMenuRes.where((e) => e.kategori == 'minuman').toList().length}');
-                                            return ItemMenu(
-                                                result: HomeController
-                                                    .to.listAllMenuRes
-                                                    .where((e) =>
-                                                        e.kategori == 'minuman')
-                                                    .toList()[index],
-                                                index: index);
+                                            // log(' PANJANG Minuman : ${HomeController.to.listAllMenuRes.where((e) => e.kategori == 'minuman').toList().length}');
+                                            return ItemMenu(result: HomeController.to.listAllMenuRes.where((e) => e.kategori == 'minuman').toList()[index], index: index);
                                           },
                                         ),
                                       ],
@@ -352,58 +288,39 @@ class HomeView extends StatelessWidget {
                                   )
                                 ],
                             'makanan': (context) => [
-                                  JudulMenu(
-                                      iconMenu: AssetConts.iconMakanan,
-                                      judulMenu: 'Makanan'),
+                                  JudulMenu(iconMenu: AssetConts.iconMakanan, judulMenu: 'food'.tr),
                                   ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount:
-                                        HomeController.to.listMakanan.length,
+                                    itemCount: HomeController.to.listMakanan.length,
                                     itemBuilder: (context, index) {
-                                      log(' PANJANG MAKANAN : ${HomeController.to.listMakanan.length}');
-                                      return ItemMenu(
-                                          result: HomeController
-                                              .to.listMakanan[index],
-                                          index: index);
+                                      // log(' PANJANG MAKANAN : ${HomeController.to.listMakanan.length}');
+                                      return ItemMenu(result: HomeController.to.listMakanan[index], index: index);
                                     },
                                   ),
                                 ],
                             'snack': (context) => [
-                                  JudulMenu(
-                                      iconMenu: AssetConts.iconMakanan,
-                                      judulMenu: 'Snack'),
+                                  JudulMenu(iconMenu: AssetConts.iconMakanan, judulMenu: 'snack'.tr),
                                   ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount:
-                                        HomeController.to.listSnack.length,
+                                    itemCount: HomeController.to.listSnack.length,
                                     itemBuilder: (context, index) {
-                                      log(' PANJANG SNACK : ${HomeController.to.listSnack.length}');
-                                      return ItemMenu(
-                                          result: HomeController
-                                              .to.listSnack[index],
-                                          index: index);
+                                      // log(' PANJANG SNACK : ${HomeController.to.listSnack.length}');
+                                      return ItemMenu(result: HomeController.to.listSnack[index], index: index);
                                     },
                                   ),
                                 ]
                           },
                           fallbackBuilder: (context) => [
-                            JudulMenu(
-                                iconMenu: AssetConts.iconMinuman,
-                                judulMenu: 'Minuman'),
+                            JudulMenu(iconMenu: AssetConts.iconMinuman, judulMenu: 'beverage'.tr),
                             ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: HomeController.to.listMinuman.length,
                               itemBuilder: (context, index) {
-                                log(' PANJANG MINUMAN : ${HomeController.to.listMinuman.length}');
-                                return ItemMenu(
-                                    result:
-                                        HomeController.to.listMinuman[index],
-                                    index: index);
+                                // log(' PANJANG MINUMAN : ${HomeController.to.listMinuman.length}');
+                                return ItemMenu(result: HomeController.to.listMinuman[index], index: index);
                               },
                             ),
                           ],
@@ -416,89 +333,54 @@ class HomeView extends StatelessWidget {
             ),
           ),
         ),
-        floatingActionButton: Obx(
-          () => Conditional.single(
-            context: context,
-            conditionBuilder: (context) => HomeController.to.menuBucket.isEmpty,
-            widgetBuilder: (context) => const SizedBox(),
-            fallbackBuilder: (context) => Stack(
-              children: [
-                FloatingActionButton(
-                  onPressed: () {
-                    Get.toNamed(AppRoutes.pesanan);
-                  },
-                  backgroundColor: Colours.green2,
-                  child: Image.asset(
-                    AssetConts.iconKeranjang,
-                    color: Colours.white,
-                    width: 25,
-                  ),
-                ),
-                Positioned(
-                  left: 41.sp,
-                  bottom: 37.sp,
-                  child: Container(
-                    height: 22.w,
-                    width: 22.w,
-                    decoration: BoxDecoration(
+        floatingActionButton: GetBuilder<HomeController>(
+          init: HomeController(),
+          builder: (_) {
+            return Conditional.single(
+              context: context,
+              conditionBuilder: (context) => HomeController.to.hiveMenu?.length == 0,
+              widgetBuilder: (context) => const SizedBox(),
+              fallbackBuilder: (context) => Stack(
+                children: [
+                  FloatingActionButton(
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.pesanan);
+                    },
+                    backgroundColor: Colours.green2,
+                    child: Image.asset(
+                      AssetConts.iconKeranjang,
                       color: Colours.white,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colours.green2),
+                      width: 25,
                     ),
-                    child: Center(
-                      child: Text(
-                        HomeController.to.menuBucket.length.toString(),
-                        style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: Colours.green2,
+                  ),
+                  Positioned(
+                    left: 41.sp,
+                    bottom: 37.sp,
+                    child: Container(
+                      height: 22.w,
+                      width: 22.w,
+                      decoration: BoxDecoration(
+                        color: Colours.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colours.green2),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${HomeController.to.hiveMenu?.length ?? 0}',
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            color: Colours.green2,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
+                ],
+              ),
+            );
+          },
         ),
-        // floatingActionButton: Stack(
-        //   children: [
-        //     FloatingActionButton(
-        //       onPressed: () {
-        //         Get.toNamed(AppRoutes.pesanan);
-        //       },
-        //       backgroundColor: Colours.green2,
-        //       child: Image.asset(
-        //         AssetConts.iconKeranjang,
-        //         color: Colours.white,
-        //         width: 25,
-        //       ),
-        //     ),
-        //     Positioned(
-        //       left: 41.sp,
-        //       bottom: 37.sp,
-        //       child: Container(
-        //         height: 22.w,
-        //         width: 22.w,
-        //         decoration: BoxDecoration(
-        //           color: Colours.white,
-        //           borderRadius: BorderRadius.circular(20),
-        //           border: Border.all(color: Colours.green2),
-        //         ),
-        //         child: Center(
-        //           child: Text(
-        //             '1',
-        //             style: GoogleFonts.montserrat(
-        //               fontWeight: FontWeight.w600,
-        //               fontSize: 14,
-        //               color: Colours.green2,
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ),
     );
   }

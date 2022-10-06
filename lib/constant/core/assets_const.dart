@@ -26,6 +26,8 @@ class AssetConts {
   static const String drawEmptyProfile = 'assets/images/draw_emptyprofile.png';
   static const String drawBgDiskon = 'assets/images/draw_bg_diskon.png';
   static const String drawBgNotification = 'assets/images/draw_bg-notif.png';
+  static const String drawPesananDisiapkan =
+      'assets/images/pesanan_disiapkan_image.png';
 
   /// bg
   static const String backgroundLoadingLokasi =
@@ -76,7 +78,11 @@ class AssetConts {
   /// LOTTIE
   static const String lottieEmptyState = 'assets/lottie/lottie_empty.json';
   static const String lottieErrorState = 'assets/lottie/lottie_error.json';
+  static const String lottieEmptyVoucher = 'assets/lottie/empty_voucher.json';
 
   /// GIF
   static const String gifLoadingImage = 'assets/gif/gif_loading_image.gif';
+
+  /// svg
+  static const String svgGoogleIcon = 'assets/svg/google_icons.svg';
 }

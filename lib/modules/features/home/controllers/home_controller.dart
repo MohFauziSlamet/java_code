@@ -3,12 +3,16 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:java_code/config/routes/app_routes.dart';
 import 'package:java_code/constant/core/api_const.dart';
+import 'package:java_code/constant/core/hive_const.dart';
 import 'package:java_code/modules/features/home/repositories/home_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:java_code/modules/models/all_menu_res/data_menu.dart';
 import 'package:java_code/modules/models/all_promo_res/data_promo.dart';
+import 'package:java_code/modules/models/hive/menu_hive_model.dart';
+import 'package:java_code/modules/models/hive/order_hive_model.dart';
 
 enum Kategori {
   all,
@@ -19,6 +23,13 @@ enum Kategori {
 
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
+  var languageBox = Hive.box(HiveConst.languageHiveBox);
+  List<MenuHive>? hiveMenu = <MenuHive>[].obs;
+
+  Future<void> getHiveMenuRes() async {
+    hiveMenu = Hive.box<OrderHive>(HiveConst.orderHiveBox).values.first.menu ?? [];
+    update();
+  }
 
   /// RxString UNTUK STATUS KONDISI DARI GET_ALL_MENU
   /// DIGUNAKAN UNTUK PENGKONDISIAN PADA VIEW
@@ -47,15 +58,14 @@ class HomeController extends GetxController {
   RxList<DataMenu> get listMakanan => filteringMenuWithSearch(kategori.value);
   RxList<DataMenu> get listSnack => filteringMenuWithSearch(kategori.value);
   RxList<DataMenu> get listMinuman => filteringMenuWithSearch(kategori.value);
-  RxList<DataMenu> get listAllMenuRes =>
-      filteringMenuWithSearch(kategori.value);
+  RxList<DataMenu> get listAllMenuRes => filteringMenuWithSearch(kategori.value);
 
   /// LIST PENAMAAN TAB MENU
   RxList tabMenu = [
-    'Semua Menu',
-    'Makanan',
-    'Snack',
-    'Minuman',
+    'all_menu'.tr,
+    'food'.tr,
+    'snack'.tr,
+    'beverage'.tr,
   ].obs;
 
   /// TAB INDEX MENU
@@ -129,17 +139,9 @@ class HomeController extends GetxController {
         },
       );
 
-      return listAllMenu
-          .where((e) => e.nama!.toLowerCase().contains(searchValue.value))
-          .toList()
-          .obs;
+      return listAllMenu.where((e) => e.nama!.toLowerCase().contains(searchValue.value)).toList().obs;
     }
-    return listAllMenu
-        .where((e) =>
-            e.kategori == category &&
-            e.nama!.toLowerCase().contains(searchValue.value))
-        .toList()
-        .obs;
+    return listAllMenu.where((e) => e.kategori == category && e.nama!.toLowerCase().contains(searchValue.value)).toList().obs;
   }
 
   /// INCREMENT ORDER
@@ -154,89 +156,29 @@ class HomeController extends GetxController {
     /// MENGUBAH CURRRENT PADA LISTALLMENU
     DataMenu current = listAllMenu.where((e) => e.idMenu == idMenu).toList()[0];
     current.count = current.count! + 1;
-
-    // /// MENAMBAHKAN PADA KERANJANG
-    // // CEK MENU SUDAH ADA DI DALAM KERANJANG LIST
-    // if (listMenuInOrder.isEmpty) {
-    //   // pertama kali menabahkan
-    //   // belum ada menu => menambahkan menu baru
-    //   listMenuInOrder.add(current);
-    //   update();
-    //   log('PERTAMA KALI MENAMBAHKAN : ${listMenuInOrder.length}');
-    // } else if (listMenuInOrder
-    //     .where((e) => e.idMenu == idMenu)
-    //     .toList()
-    //     .isEmpty) {
-    //   // menambahkan menu baru kedalam keranjang yang berbeda dari menu sebelumnya
-    //   update();
-    //   log('CEK BUG');
-    //   listMenuInOrder.add(current);
-    //   log('MENAMBAHKAN MENU LAIN : ${listMenuInOrder.length}');
-    // } else {
-    //   // sudah ada menu , hanya menambahkan jumlah count
-    //   var existMenu =
-    //       listMenuInOrder.where((e) => e.idMenu == idMenu).toList()[0];
-    //   existMenu.count = existMenu.count!;
-    //   update();
-    //   log('${existMenu.nama} - ${existMenu.count} ');
-    //   log('MENAMBAHKAN COUNT SAJA : ${listMenuInOrder.length}');
-    // }
-    // log('LIST PESANAN : ${listMenuInOrder.toJson().toString()}');
     update();
   }
 
   /// DECREMENT ORDER
   void decrementOrder({required int idMenu}) {
-    // if (listAllMenu.where((e) => e.idMenu == idMenu).toList()[0].count != 0) {
     /// MENGURANGI PADA LIST ALL MENU
     DataMenu current = listAllMenu.where((e) => e.idMenu == idMenu).toList()[0];
     current.count = current.count! - 1;
-    // log('DECREMENT NAMA MENU : ${listAllMenu.where((e) => e.idMenu == idMenu).toList()[0].nama}');
-    // log('DECREMENT IDMENU MENU : ${listAllMenu.where((e) => e.idMenu == idMenu).toList()[0].idMenu}');
-    // log('DECREMENT COUNT MENU : ${listAllMenu.where((e) => e.idMenu == idMenu).toList()[0].count}');
 
-    // /// MENGURANGI PADA KERANGJANG
-    // /// PASTI ADA MINIMAL 1 MENU
-    // List<DataMenu> axistMenu =
-    //     listMenuInOrder.where((e) => e.idMenu == idMenu).toList();
-
-    // if (axistMenu[0].count == 1) {
-    //   // JIKA YANG MAU DI HAPUS MEMILIKI AXIST COUNT HANYA 1
-    //   log("JIKA YANG MAU DI HAPUS MEMILIKI AXIST COUNT HANYA 1");
-
-    //   // DI HAPUS DARI LIST
-    //   listMenuInOrder.remove(axistMenu[0]);
-    // } else {
-    //   // BERARTI AXIST MENU MEMILIKI COUNT LEBIH DARI 1
-    //   axistMenu[0].count = axistMenu[0].count!;
-    // }
-
-    // log('LIST PESANAN ${listMenuInOrder.toJson()}');
     update();
-    // }
   }
 
   RxList<DataMenu> getMenuByIdMenu({required int idMenu}) {
     return listAllMenu.where((e) => e.idMenu == idMenu).toList().obs;
   }
 
-  /// MEMASUKAN PESANAN KEDALAM KERANJANG
-  RxList<DataMenu> menuBucket = <DataMenu>[].obs;
-  void insetMenuToBucketMenu({required int idMenu}) {
-    if (getMenuByIdMenu(idMenu: idMenu)[0].count != 0) {
-      var data =
-          HomeController.to.listAllMenu.where((e) => e.count != 0).toList();
-      log('BUCKET LENGHT : ${data.length}');
-      // HomeController.to.listAllMenu.where((e) => e.count != 0).toList();
-      menuBucket.value.addAll(
-          HomeController.to.listAllMenu.where((e) => e.count != 0).toList());
-      log('DETAIL MENU CONTROLLER');
-      log('BUCKET LENGHT : ${menuBucket.length}');
-      log('BUCKET LENGHT : ${listAllMenu.length}');
-      log('BUCKET CONTAINS : ${menuBucket[0].nama} -  ${menuBucket[0].count}');
-
-      Get.toNamed(AppRoutes.pesanan);
+  Future<void> cekLanguage() async {
+    String? selectedLanguage = languageBox.get("country_id");
+    if (selectedLanguage == null) {
+      languageBox.put("country_id", Get.deviceLocale?.languageCode ?? "en");
+      return;
     }
+    return;
   }
 
   @override
@@ -255,6 +197,13 @@ class HomeController extends GetxController {
 
     /// KATEGORI AWAL KETIKA STARTING MENU
     kategori.value = tabMenuKategori[0];
+
+    ///
+    cekLanguage();
+    if (Hive.box<OrderHive>(HiveConst.orderHiveBox).values.first.menu != null) {
+      await getHiveMenuRes();
+      update();
+    }
 
     super.onInit();
   }

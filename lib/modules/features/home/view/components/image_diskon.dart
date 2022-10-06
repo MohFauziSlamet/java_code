@@ -66,10 +66,10 @@ class ImageDiskon extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 80.w,
+                      width: 90.w,
                       height: 21.h,
                       child: Text(
-                        'Diskon',
+                        'discount'.tr,
                         style: GoogleFonts.montserrat(
                           color: Colours.white,
                           fontWeight: FontWeight.w800,

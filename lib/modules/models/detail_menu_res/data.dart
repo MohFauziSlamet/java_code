@@ -8,7 +8,7 @@ part 'data.g.dart';
 @JsonSerializable()
 class Data {
   Menu? menu;
-  List<dynamic>? topping;
+  List<Level>? topping;
   List<Level>? level;
 
   Data({this.menu, this.topping, this.level});
